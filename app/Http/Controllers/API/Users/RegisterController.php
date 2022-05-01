@@ -30,7 +30,7 @@ class RegisterController extends Controller
             'national_id' => 'required|regex:/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/',
             'password' => 'required|min:6' ,
             'confirmPassword' => 'required|same:password' ,
-            'avatar'=>'sometimes|image:jpeg,jpg,png,gif|required|max:10000',
+            'avatar'=>'sometimes|nullable|image:jpeg,jpg,png,gif|required|max:10000',
 
             // Contact Info Validation
             'mobile_1'=> 'required|regex:/^01[0125][0-9]{8}$/',
@@ -96,13 +96,25 @@ class RegisterController extends Controller
 
         if ($validator->fails()) {
             return $this->returnValidationError('E222',$validator);
-        }else{
+        }
+        else {
+            try {
+                // Saving Device Picture in the images/devices path
+                $now = Carbon::now();
+                $device_path= 'public/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
+                $devicePhoto = $request->devicePicture;
+                $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
+                $devicePhoto->storeAs($device_path,$deviceNewPhoto);
+                $ReportData['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+            }catch (\Exception $ex){
+                return $this->returnError($ex->getCode(), $ex->getMessage());
+            }catch (Throwable $e){
+                return $this->returnError($e->getCode(), $e->getMessage());
+            }
+
             $serial = Report::where('serialNumber',$ReportData['serialNumber'])->first();
             if (is_null($serial))
             {
-                // Hashing User Password
-                $RegData['password'] = Hash::make($RegData['password']);
-
                 // Saving User Picture in the public/images/avatars path (if founded)
                 if($request->avatar)
                 {
@@ -113,8 +125,11 @@ class RegisterController extends Controller
                     $userPhoto->storeAs($path,$userNewPhoto);
                     $RegData['avatar'] = 'storage/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
                 }
-                // Create User
+
                 $RegData['fullInfo'] = true;
+                // Hashing User Password
+                $RegData['password'] = Hash::make($RegData['password']);
+                // Create User
                 $user = User::create($RegData);
 
                 // generate token and get user id for the auth user
@@ -125,16 +140,6 @@ class RegisterController extends Controller
 
                 // Create Contact Informations for the registerd User
                 $user->contact()->create($ContactData);
-
-
-                // Saving Device Picture in the images/devices path
-                $now = Carbon::now();
-                $device_path= 'public/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
-                $devicePhoto = $request->devicePicture;
-                $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
-                $devicePhoto->storeAs($device_path,$deviceNewPhoto);
-                $ReportData['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
-
                 // Create first Report for the registerd User
                 $user->report()->create($ReportData);
                 return $this->returnData('Token',$token,'User & Info & Report Registerd Successfully');
@@ -147,7 +152,7 @@ class RegisterController extends Controller
     public function completeSteps(Request $request)
     {
         $authUser = Auth::guard('user-api')->user();
-        $selection = Owner::find($authUser->id);
+        $selection = User::find($authUser->id);
 
         if ($authUser['fullInfo'] == false)
         {
@@ -221,7 +226,20 @@ class RegisterController extends Controller
             if ($validator->fails()) {
                 return $this->returnValidationError('E222',$validator);
             }else{
-
+                try {
+                    // Saving Device Picture in the images/devices path
+                    $now = Carbon::now();
+                    $device_path= 'public/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
+                    $devicePhoto = $request->devicePicture;
+                    $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
+                    $devicePhoto->storeAs($device_path,$deviceNewPhoto);
+                    $ReportData['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+                }catch (\Exception $ex){
+                    return $this->returnError($ex->getCode(), $ex->getMessage());
+                }catch (Throwable $e){
+                    return $this->returnError($e->getCode(), $e->getMessage());
+                }
+            }
                 // Hashing User Password
                 $RegData['password'] = Hash::make($RegData['password']);
                 // Create User
@@ -236,18 +254,11 @@ class RegisterController extends Controller
                 // Create Contact Informations for the registerd User
                 $selection->contact()->create($ContactData);
 
-                // Saving Device Picture in the images/devices path
-                $now = Carbon::now();
-                $device_path= 'public/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
-                $devicePhoto = $request->devicePicture;
-                $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
-                $devicePhoto->storeAs($device_path,$deviceNewPhoto);
-                $ReportData['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
 
                 // Create first Report for the registerd User
                 $selection->report()->create($ReportData);
                 return $this->returnData('Token',$token,'User & Info & Report Completed Successfully');
-            }
+
         }else{
             return $this->returnSuccessMessage('Nothing to Complete');
         }
