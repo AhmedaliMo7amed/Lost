@@ -96,8 +96,7 @@ class RegisterController extends Controller
 
         if ($validator->fails()) {
             return $this->returnValidationError('E222',$validator);
-        }
-        else {
+        } else {
             try {
                 // Saving Device Picture in the images/devices path
                 $now = Carbon::now();
@@ -106,46 +105,49 @@ class RegisterController extends Controller
                 $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
                 $devicePhoto->storeAs($device_path,$deviceNewPhoto);
                 $ReportData['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
-            }catch (\Exception $ex){
-                return $this->returnError($ex->getCode(), $ex->getMessage());
-            }catch (Throwable $e){
+
+                $serial = Report::where('serialNumber',$ReportData['serialNumber'])->first();
+
+                if (is_null($serial))
+                {
+                    // Saving User Picture in the public/images/avatars path (if founded)
+                    if($request->avatar)
+                    {
+                        $now = Carbon::now();
+                        $path= 'public/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
+                        $userPhoto = $request->avatar;
+                        $userNewPhoto =Carbon::now()->format('His').$userPhoto->getClientOriginalName();
+                        $userPhoto->storeAs($path,$userNewPhoto);
+                        $RegData['avatar'] = 'storage/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
+                    }
+
+                    $RegData['fullInfo'] = true;
+                    // Hashing User Password
+                    $RegData['password'] = Hash::make($RegData['password']);
+                    // Create User
+                    $user = User::create($RegData);
+
+                    // generate token and get user id for the auth user
+                    $token = Auth::guard('user-api')->attempt([
+                        'email'=>$request->email,
+                        'password'=>$request->password
+                    ]);
+
+                    // Create Contact Informations for the registerd User
+                    $user->contact()->create($ContactData);
+                    // Create first Report for the registerd User
+                    $user->report()->create($ReportData);
+                    return $this->returnData('Token',$token,'User & Info & Report Registerd Successfully');
+                }else{
+                    return $this->returnError('E444','Serial Number Is Reported Before');
+                }
+            }catch (\Throwable $e){
                 return $this->returnError($e->getCode(), $e->getMessage());
             }
-
-            $serial = Report::where('serialNumber',$ReportData['serialNumber'])->first();
-            if (is_null($serial))
-            {
-                // Saving User Picture in the public/images/avatars path (if founded)
-                if($request->avatar)
-                {
-                    $now = Carbon::now();
-                    $path= 'public/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
-                    $userPhoto = $request->avatar;
-                    $userNewPhoto =Carbon::now()->format('His').$userPhoto->getClientOriginalName();
-                    $userPhoto->storeAs($path,$userNewPhoto);
-                    $RegData['avatar'] = 'storage/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
-                }
-
-                $RegData['fullInfo'] = true;
-                // Hashing User Password
-                $RegData['password'] = Hash::make($RegData['password']);
-                // Create User
-                $user = User::create($RegData);
-
-                // generate token and get user id for the auth user
-                $token = Auth::guard('user-api')->attempt([
-                    'email'=>$request->email,
-                    'password'=>$request->password
-                ]);
-
-                // Create Contact Informations for the registerd User
-                $user->contact()->create($ContactData);
-                // Create first Report for the registerd User
-                $user->report()->create($ReportData);
-                return $this->returnData('Token',$token,'User & Info & Report Registerd Successfully');
-            }else{
-                return $this->returnError('E444','Serial Number Is Reported Before');
+            catch (\Exception $ex){
+                return $this->returnError($ex->getCode(), $ex->getMessage());
             }
+
         }
     }
 
@@ -234,31 +236,30 @@ class RegisterController extends Controller
                     $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
                     $devicePhoto->storeAs($device_path,$deviceNewPhoto);
                     $ReportData['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+
+                    // Hashing User Password
+                    $RegData['password'] = Hash::make($RegData['password']);
+                    // Create User
+                    $RegData['fullInfo'] = true;
+
+                    $selection->update($RegData);
+                    // generate token and get user id for the auth user
+                    $token = Auth::guard('user-api')->attempt([
+                        'email'=>$authUser->email,
+                        'password'=>$request->password
+                    ]);
+                    // Create Contact Informations for the registerd User
+                    $selection->contact()->create($ContactData);
+
+                    // Create first Report for the registerd User
+                    $selection->report()->create($ReportData);
+                    return $this->returnData('Token',$token,'User & Info & Report Completed Successfully');
                 }catch (\Exception $ex){
                     return $this->returnError($ex->getCode(), $ex->getMessage());
-                }catch (Throwable $e){
+                }catch (\Throwable $e){
                     return $this->returnError($e->getCode(), $e->getMessage());
                 }
             }
-                // Hashing User Password
-                $RegData['password'] = Hash::make($RegData['password']);
-                // Create User
-                $RegData['fullInfo'] = true;
-
-                $selection->update($RegData);
-                // generate token and get user id for the auth user
-                $token = Auth::guard('user-api')->attempt([
-                    'email'=>$authUser->email,
-                    'password'=>$request->password
-                ]);
-                // Create Contact Informations for the registerd User
-                $selection->contact()->create($ContactData);
-
-
-                // Create first Report for the registerd User
-                $selection->report()->create($ReportData);
-                return $this->returnData('Token',$token,'User & Info & Report Completed Successfully');
-
         }else{
             return $this->returnSuccessMessage('Nothing to Complete');
         }
