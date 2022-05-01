@@ -17,6 +17,7 @@ Route::group(['prefix'=>'admin' ,'middleware'=>'CheckAdminToken:admin-api','name
     Route::get('getUser/{id}', 'AdminController@getUser');
     Route::delete('deleteUser/{id}', 'AdminController@deleteUser');
     Route::post('updateUser/{id}', 'AdminController@updateUser');
+    Route::get('usersReportsCount', 'AdminController@usersReportsCount');
 
 });
 

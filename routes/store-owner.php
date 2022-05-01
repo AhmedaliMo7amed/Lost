@@ -40,7 +40,7 @@ Route::group(['prefix'=>'store-owner' ,'middleware'=>'checkOwnerToken:owner-api'
         Route::get('get-all', 'GeneralController@index' );
         Route::get('get/{id}', 'GeneralController@show' );
         Route::get('list', 'GeneralController@list' );
-        Route::get('search', 'GeneralController@serialSerach' );
+        Route::get('serialSerach', 'GeneralController@serialSerach' );
     });
 
 

@@ -44,7 +44,7 @@ class OwnerProfileController extends Controller
                 return $this->returnSuccessMessage('password Changed Successfuly','S111');
 
             }else{
-                return $this->returnError('E000', 'Current Password not match');
+                return $this->returnError('E000', 'Current Password not true!');
             }
         }
 

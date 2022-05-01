@@ -21,7 +21,7 @@ class AuthController extends Controller
         try {
             // Validation
             $rules = [
-                "email" => "required",
+                'email' => 'required|email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
                 "password" => "required"
             ];
             $validator = Validator::make($request->all(), $rules);
@@ -36,8 +36,6 @@ class AuthController extends Controller
             $token = Auth::guard('owner-api')->attempt($credentials);
             if (!$token)
                 return $this->returnError('E001', 'Credentials Not Correct !');
-//            $owner->api_token = $token;
-//            $result = new OwnerResource($owner);
             $owner = Auth::guard('owner-api')->user();
             $owner->token = $token;
             $myowner = new OwnerResource($owner);

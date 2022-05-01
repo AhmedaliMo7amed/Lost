@@ -47,8 +47,6 @@ class GeneralController extends Controller
         }else{
             return $this->returnError('404' , 'no report founded');
         }
-
-
     }
 
     public function list(Request $request)
@@ -92,16 +90,16 @@ class GeneralController extends Controller
             }
             if ($request->backCrach_top)
             {
-                $reportQuery->where('frontCrach_top' , $request->frontCrach_top );
+                $reportQuery->where('backCrach_top' , $request->backCrach_top );
             }
             if ($request->backCrach_center)
             {
 
-                $reportQuery->where('frontCrach_center' , $request->frontCrach_center );
+                $reportQuery->where('backCrach_center' , $request->backCrach_center );
             }
             if ($request->backCrach_bottom)
             {
-                $reportQuery->where('frontCrach_bottom' , $request->frontCrach_bottom );
+                $reportQuery->where('backCrach_bottom' , $request->backCrach_bottom );
             }
 
             $reports = $reportQuery->get();

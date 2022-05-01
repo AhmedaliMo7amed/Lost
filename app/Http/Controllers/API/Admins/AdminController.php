@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Admins;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserWithoutToken as UserResource;
+use App\Http\Resources\UserWithCounter;
 use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -131,5 +132,11 @@ class AdminController extends Controller
         }
     }
 
+    public function usersReportsCount()
+    {
+        $users = User::withCount('report')->orderBy('report_count','desc')->limit(8)->get();
+        $result = UserWithCounter::collection($users);
+        return $this->returnData('Data',$result , 'User Reports Counter Done');
+    }
 
 }

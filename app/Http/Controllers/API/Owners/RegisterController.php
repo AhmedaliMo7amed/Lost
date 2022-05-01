@@ -30,12 +30,12 @@ class RegisterController extends Controller
             'mobile' => 'required|regex:/^01[0125][0-9]{8}$/',
             'password' => 'required|min:6' ,
             'confirmPassword' => 'required|same:password' ,
-            'avatar'=>'sometimes|image:jpeg,jpg,png,gif|required|max:10000',
+            'avatar'=>'sometimes|image:jpeg,jpg,png,gif|max:10000',
 
             // store Validation
             'storeName' => 'required|string' ,
-            'government'=> 'required|string|max:15',
-            'city'=> 'required|string|max:15',
+            'government'=> 'required|string|max:12',
+            'city'=> 'required|string|max:12',
             'street'=> 'required|string|max:30',
             'storeMobile_1'=> 'required|regex:/^01[0125][0-9]{8}$/',
             'storeMobile_2' => 'sometimes|nullable|regex:/^01[0125][0-9]{8}$/' ,
@@ -95,16 +95,13 @@ class RegisterController extends Controller
         $authOwner = Auth::guard('owner-api')->user();
         $selection = Owner::find($authOwner->id);
 
-
-
         if ($authOwner['fullInfo'] == false)
         {
-
             $validator =Validator::make($request->all() ,[
 
                 // owner Validation
-                'firstName' => 'sometimes|alpha' ,
-                'lastName' => 'sometimes|alpha' ,
+                'firstName' => 'required|alpha' ,
+                'lastName' => 'required|alpha' ,
                 'mobile' => 'required|regex:/^01[0125][0-9]{8}$/',
                 'password' => 'required|min:6' ,
                 'confirmPassword' => 'required|same:password' ,

@@ -35,7 +35,7 @@ class Report extends JsonResource
             'staus'=>$this->additional_info,
             'created_at' => $this->created_at->format('d/m/y'),
             'updated_at' => $this->updated_at->format('d/m/y'),
-            'user' => new User($this->user),
+            'user' => new UserWithoutToken($this->user),
             'contactInfo' => new Contact($this->user->contact),
         ];
     }
