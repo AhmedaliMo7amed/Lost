@@ -34,7 +34,7 @@ class RegisterController extends Controller
 
             // Contact Info Validation
             'mobile_1'=> 'required|regex:/^01[0125][0-9]{8}$/',
-            'mobile_2'=> 'sometimes|regex:/^01[0125][0-9]{8}$/',
+            'mobile_2'=> 'sometimes|nullable|regex:/^01[0125][0-9]{8}$/',
             'government'=> 'required|nullable|string|max:15',
             'city'=> 'required|nullable|string|max:15',
             'street'=> 'required|nullable|string|max:30',
@@ -55,7 +55,7 @@ class RegisterController extends Controller
             'backCrach_top'=>'sometimes|nullable|numeric',
             'backCrach_center'=>'sometimes|nullable|numeric',
             'backCrach_bottom'=>'sometimes|nullable|numeric',
-            'devicePicture'=>'required|image:jpeg,jpg,png,gif|required|max:10000',
+            'devicePicture'=>'required|image:jpeg,jpg,png,gif|max:10000',
             'additional_info'=>'sometimes|nullable|string|max:100',
         ]);
         $RegData = $request->only([
@@ -167,7 +167,7 @@ class RegisterController extends Controller
 
                 // Contact Info Validation
                 'mobile_1'=> 'required|regex:/^01[0125][0-9]{8}$/',
-                'mobile_2'=> 'sometimes|regex:/^01[0125][0-9]{8}$/',
+                'mobile_2'=> 'sometimes|nullable|regex:/^01[0125][0-9]{8}$/',
                 'government'=> 'required|nullable|string|max:15',
                 'city'=> 'required|nullable|string|max:15',
                 'street'=> 'required|nullable|string|max:30',
@@ -175,20 +175,20 @@ class RegisterController extends Controller
                 'whatsapp' => 'sometimes|regex:/^01[0125][0-9]{8}$/',
 
                 // First Device Validation
-                'serialNumber'=>'sometimes|regex:/^\d{15,17}$/',
+                'serialNumber'=>'sometimes|nullable|regex:/^\d{15,17}$/',
                 'type'=>'required|alpha',
                 'brand'=>'required|alpha',
                 'model'=>'required',
                 'color'=>'required',
                 'RAM'=>'required|numeric',
                 'ROM'=>'required|numeric',
-                'frontCrach_top'=>'sometimes|numeric',
-                'frontCrach_center'=>'sometimes|numeric',
-                'frontCrach_bottom'=>'sometimes|numeric',
-                'backCrach_top'=>'sometimes|numeric',
-                'backCrach_center'=>'sometimes|numeric',
-                'backCrach_bottom'=>'sometimes|numeric',
-                'devicePicture'=>'required|image:jpeg,jpg,png,gif|required|max:10000',
+                'frontCrach_top'=>'sometimes|nullable|numeric',
+                'frontCrach_center'=>'sometimes|nullable|numeric',
+                'frontCrach_bottom'=>'sometimes|nullable|numeric',
+                'backCrach_top'=>'sometimes|nullable|numeric',
+                'backCrach_center'=>'sometimes|nullable|numeric',
+                'backCrach_bottom'=>'sometimes|nullable|numeric',
+                'devicePicture'=>'required|image:jpeg,jpg,png,gif|max:10000',
                 'additional_info'=>'sometimes|nullable|string|max:100',
             ]);
             $RegData = $request->only([
