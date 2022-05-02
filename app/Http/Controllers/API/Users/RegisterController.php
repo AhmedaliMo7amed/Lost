@@ -20,7 +20,6 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-
         $validator =Validator::make($request->all() ,[
 
             // User Validation
@@ -49,13 +48,13 @@ class RegisterController extends Controller
             'color'=>'required',
             'RAM'=>'required|numeric',
             'ROM'=>'required|numeric',
-            'frontCrach_top'=>'sometimes|nullable|numeric',
-            'frontCrach_center'=>'sometimes|nullable|numeric',
-            'frontCrach_bottom'=>'sometimes|nullable|numeric',
-            'backCrach_top'=>'sometimes|nullable|numeric',
-            'backCrach_center'=>'sometimes|nullable|numeric',
-            'backCrach_bottom'=>'sometimes|nullable|numeric',
-            'devicePicture'=>'required|image:jpeg,jpg,png,gif|max:10000',
+            'frontCrach_top'=>'sometimes|nullable|boolean',
+            'frontCrach_center'=>'sometimes|nullable|boolean',
+            'frontCrach_bottom'=>'sometimes|nullable|boolean',
+            'backCrach_top'=>'sometimes|nullable|boolean',
+            'backCrach_center'=>'sometimes|nullable|boolean',
+            'backCrach_bottom'=>'sometimes|nullable|boolean',
+            'devicePicture'=>'required|mimes:jpeg,jpg,png,gif|max:10000',
             'additional_info'=>'sometimes|nullable|string|max:100',
         ]);
         $RegData = $request->only([
@@ -98,18 +97,24 @@ class RegisterController extends Controller
             return $this->returnValidationError('E222',$validator);
         } else {
             try {
-                // Saving Device Picture in the images/devices path
-                $now = Carbon::now();
-                $device_path= 'public/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
-                $devicePhoto = $request->devicePicture;
-                $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
-                $devicePhoto->storeAs($device_path,$deviceNewPhoto);
-                $ReportData['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
 
                 $serial = Report::where('serialNumber',$ReportData['serialNumber'])->first();
 
                 if (is_null($serial))
                 {
+                    // Saving Device Picture in the images/devices path
+                    if ($request->hasFile('devicePicture'))
+                    {
+                        $now = Carbon::now();
+                        $device_path= 'public/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
+                        $devicePhoto = $request->file('devicePicture');
+                        $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
+                        $devicePhoto->storeAs($device_path,$deviceNewPhoto);
+                        $ReportData['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+                    }else{
+                        return $this->returnError('E444','Device picture must be included');
+                    }
+
                     // Saving User Picture in the public/images/avatars path (if founded)
                     if($request->avatar)
                     {
@@ -184,13 +189,13 @@ class RegisterController extends Controller
                 'color'=>'required',
                 'RAM'=>'required|numeric',
                 'ROM'=>'required|numeric',
-                'frontCrach_top'=>'sometimes|nullable|numeric',
-                'frontCrach_center'=>'sometimes|nullable|numeric',
-                'frontCrach_bottom'=>'sometimes|nullable|numeric',
-                'backCrach_top'=>'sometimes|nullable|numeric',
-                'backCrach_center'=>'sometimes|nullable|numeric',
-                'backCrach_bottom'=>'sometimes|nullable|numeric',
-                'devicePicture'=>'required|image:jpeg,jpg,png,gif|max:10000',
+                'frontCrach_top'=>'sometimes|nullable|boolean',
+                'frontCrach_center'=>'sometimes|nullable|boolean',
+                'frontCrach_bottom'=>'sometimes|nullable|boolean',
+                'backCrach_top'=>'sometimes|nullable|boolean',
+                'backCrach_center'=>'sometimes|nullable|boolean',
+                'backCrach_bottom'=>'sometimes|nullable|boolean',
+                'devicePicture'=>'required|mimes:jpeg,jpg,png,gif|max:10000',
                 'additional_info'=>'sometimes|nullable|string|max:100',
             ]);
             $RegData = $request->only([
@@ -229,31 +234,52 @@ class RegisterController extends Controller
                 return $this->returnValidationError('E222',$validator);
             }else{
                 try {
-                    // Saving Device Picture in the images/devices path
-                    $now = Carbon::now();
-                    $device_path= 'public/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
-                    $devicePhoto = $request->devicePicture;
-                    $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
-                    $devicePhoto->storeAs($device_path,$deviceNewPhoto);
-                    $ReportData['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+                    $serial = Report::where('serialNumber',$ReportData['serialNumber'])->first();
 
-                    // Hashing User Password
-                    $RegData['password'] = Hash::make($RegData['password']);
-                    // Create User
-                    $RegData['fullInfo'] = true;
+                    if (is_null($serial))
+                    {
+                        if ($request->hasFile('devicePicture'))
+                        {
+                            $now = Carbon::now();
+                            $device_path= 'public/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
+                            $devicePhoto = $request->file('devicePicture');
+                            $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
+                            $devicePhoto->storeAs($device_path,$deviceNewPhoto);
+                            $ReportData['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
 
-                    $selection->update($RegData);
-                    // generate token and get user id for the auth user
-                    $token = Auth::guard('user-api')->attempt([
-                        'email'=>$authUser->email,
-                        'password'=>$request->password
-                    ]);
-                    // Create Contact Informations for the registerd User
-                    $selection->contact()->create($ContactData);
+                        }else{
+                            return $this->returnError('E444','Device Picture Must Be Included');
+                        }
+                        // Saving User Picture in the public/images/avatars path (if founded)
+                        if($request->avatar)
+                        {
+                            $now = Carbon::now();
+                            $path= 'public/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
+                            $userPhoto = $request->avatar;
+                            $userNewPhoto =Carbon::now()->format('His').$userPhoto->getClientOriginalName();
+                            $userPhoto->storeAs($path,$userNewPhoto);
+                            $RegData['avatar'] = 'storage/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
+                        }
 
-                    // Create first Report for the registerd User
-                    $selection->report()->create($ReportData);
-                    return $this->returnData('Token',$token,'User & Info & Report Completed Successfully');
+                        // Hashing User Password
+                        $RegData['password'] = Hash::make($RegData['password']);
+                        // Create User
+                        $RegData['fullInfo'] = true;
+
+                        $selection->update($RegData);
+                        // generate token and get user id for the auth user
+                        $token = Auth::guard('user-api')->attempt([
+                            'email'=>$authUser->email,
+                            'password'=>$request->password
+                        ]);
+                        // Create Contact Informations for the registerd User
+                        $selection->contact()->create($ContactData);
+
+                        // Create first Report for the registerd User
+                        $selection->report()->create($ReportData);
+
+                        return $this->returnData('Token',$token,'User & Info & Report Completed Successfully');
+                    }
                 }catch (\Exception $ex){
                     return $this->returnError($ex->getCode(), $ex->getMessage());
                 }catch (\Throwable $e){
