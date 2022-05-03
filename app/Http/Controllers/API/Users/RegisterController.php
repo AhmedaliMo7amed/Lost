@@ -9,9 +9,11 @@ use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\Console\Input\Input;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Validator;
 use Auth;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 class RegisterController extends Controller
@@ -20,6 +22,7 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
+
         $validator =Validator::make($request->all() ,[
 
             // User Validation
