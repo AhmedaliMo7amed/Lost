@@ -23,12 +23,12 @@ class CreateDeviceReportsTable extends Migration
             $table->string('color');
             $table->integer('RAM');
             $table->integer('ROM');
-            $table->tinyInteger('frontCrach_top')->nullable()->default('0');
-            $table->tinyInteger('frontCrach_center')->nullable()->default('0');
-            $table->tinyInteger('frontCrach_bottom')->nullable()->default('0');
-            $table->tinyInteger('backCrach_top')->nullable()->default('0');
-            $table->tinyInteger('backCrach_center')->nullable()->default('0');
-            $table->tinyInteger('backCrach_bottom')->nullable()->default('0');
+            $table->boolean('frontCrach_top')->nullable()->default(false);
+            $table->boolean('frontCrach_center')->nullable()->default(false);
+            $table->boolean('frontCrach_bottom')->nullable()->default(false);
+            $table->boolean('backCrach_top')->nullable()->default(false);
+            $table->boolean('backCrach_center')->nullable()->default(false);
+            $table->boolean('backCrach_bottom')->nullable()->default(false);
             $table->string('devicePicture');
             $table->string('additional_info')->nullable();
             $table->tinyInteger('status')->default('0');

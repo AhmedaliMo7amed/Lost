@@ -31,17 +31,17 @@ class RegisterController extends Controller
             'confirmPassword' => 'required|same:password' ,
             'avatar'=>'sometimes|nullable|image:jpeg,jpg,png,gif|required|max:10000',
 
-            // Contact Info Validation
+            // // Contact Info Validation
             'mobile_1'=> 'required|regex:/^01[0125][0-9]{8}$/',
-            'mobile_2'=> 'sometimes|nullable|regex:/^01[0125][0-9]{8}$/',
+            'mobile_2'=> 'sometimes|nullable',
             'government'=> 'required|nullable|string|max:15',
             'city'=> 'required|nullable|string|max:15',
             'street'=> 'required|nullable|string|max:30',
-            'facebookLink' => 'sometimes|nullable|url|regex:/http(?:s):\/\/(?:www\.)facebook\.com\/.+/i',
-            'whatsapp' => 'sometimes|nullable|regex:/^01[0125][0-9]{8}$/',
+            'facebookLink' => 'sometimes|nullable',
+            'whatsapp' => 'sometimes|nullable',
 
-            // First Device Validation
-            'serialNumber'=>'sometimes|nullable|regex:/^\d{15,17}$/',
+            // // First Device Validation
+            'serialNumber'=>'sometimes|nullable',
             'type'=>'required|alpha',
             'brand'=>'required|alpha',
             'model'=>'required',
@@ -97,8 +97,12 @@ class RegisterController extends Controller
             return $this->returnValidationError('E222',$validator);
         } else {
             try {
-
-                $serial = Report::where('serialNumber',$ReportData['serialNumber'])->first();
+                if(!empty($request->serialNumber)){
+                    $serial = Report::where('serialNumber',$ReportData['serialNumber'])->first();
+                }
+                else{
+                    $serial = null;
+                }
 
                 if (is_null($serial))
                 {
