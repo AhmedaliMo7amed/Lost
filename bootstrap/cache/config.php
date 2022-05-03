@@ -210,7 +210,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\Users\\AHME ALI\\Desktop\\Lostapp\\storage\\framework/cache/data',
+        'path' => 'C:\\Users\\Dell\\OneDrive\\Desktop\\LostBack\\Lost\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -381,12 +381,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\AHME ALI\\Desktop\\Lostapp\\storage\\app',
+        'root' => 'C:\\Users\\Dell\\OneDrive\\Desktop\\LostBack\\Lost\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\AHME ALI\\Desktop\\Lostapp\\storage\\app/public',
+        'root' => 'C:\\Users\\Dell\\OneDrive\\Desktop\\LostBack\\Lost\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -404,7 +404,7 @@
     ),
     'links' => 
     array (
-      'C:\\Users\\AHME ALI\\Desktop\\Lostapp\\public\\storage' => 'C:\\Users\\AHME ALI\\Desktop\\Lostapp\\storage\\app/public',
+      'C:\\Users\\Dell\\OneDrive\\Desktop\\LostBack\\Lost\\public\\storage' => 'C:\\Users\\Dell\\OneDrive\\Desktop\\LostBack\\Lost\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -475,13 +475,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\Users\\AHME ALI\\Desktop\\Lostapp\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\Dell\\OneDrive\\Desktop\\LostBack\\Lost\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\Users\\AHME ALI\\Desktop\\Lostapp\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\Dell\\OneDrive\\Desktop\\LostBack\\Lost\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -532,7 +532,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\Users\\AHME ALI\\Desktop\\Lostapp\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\Dell\\OneDrive\\Desktop\\LostBack\\Lost\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -598,7 +598,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\Users\\AHME ALI\\Desktop\\Lostapp\\resources\\views/vendor/mail',
+        0 => 'C:\\Users\\Dell\\OneDrive\\Desktop\\LostBack\\Lost\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -721,7 +721,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\Users\\AHME ALI\\Desktop\\Lostapp\\storage\\framework/sessions',
+    'files' => 'C:\\Users\\Dell\\OneDrive\\Desktop\\LostBack\\Lost\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -741,9 +741,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\Users\\AHME ALI\\Desktop\\Lostapp\\resources\\views',
+      0 => 'C:\\Users\\Dell\\OneDrive\\Desktop\\LostBack\\Lost\\resources\\views',
     ),
-    'compiled' => 'C:\\Users\\AHME ALI\\Desktop\\Lostapp\\storage\\framework\\views',
+    'compiled' => 'C:\\Users\\Dell\\OneDrive\\Desktop\\LostBack\\Lost\\storage\\framework\\views',
   ),
   'flare' => 
   array (
@@ -799,7 +799,7 @@
     'include_helpers' => false,
     'helper_files' => 
     array (
-      0 => 'C:\\Users\\AHME ALI\\Desktop\\Lostapp/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
+      0 => 'C:\\Users\\Dell\\OneDrive\\Desktop\\LostBack\\Lost/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
     ),
     'model_locations' => 
     array (
