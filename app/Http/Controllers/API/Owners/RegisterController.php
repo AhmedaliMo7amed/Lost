@@ -30,17 +30,17 @@ class RegisterController extends Controller
             'mobile' => 'required|regex:/^01[0125][0-9]{8}$/',
             'password' => 'required|min:6' ,
             'confirmPassword' => 'required|same:password' ,
-            'avatar'=>'sometimes|image:jpeg,jpg,png,gif|max:10000',
+            'avatar'=>'nullable|image:jpeg,jpg,png,gif|max:10000',
 
             // store Validation
             'storeName' => 'required|string' ,
-            'government'=> 'required|string|max:12',
-            'city'=> 'required|string|max:12',
+            'government'=> 'required|string|max:15',
+            'city'=> 'required|string|max:15',
             'street'=> 'required|string|max:30',
             'storeMobile_1'=> 'required|regex:/^01[0125][0-9]{8}$/',
-            'storeMobile_2' => 'sometimes|nullable|regex:/^01[0125][0-9]{8}$/' ,
-            'facebookLink' => 'sometimes|nullable|url|regex:/http(?:s):\/\/(?:www\.)facebook\.com\/.+/i',
-            'whatsapp' => 'sometimes|nullable|regex:/^01[0125][0-9]{8}$/'
+            'storeMobile_2' => 'nullable|regex:/^01[0125][0-9]{8}$/' ,
+            'facebookLink' => 'nullable|url|regex:/http(?:s):\/\/(?:www\.)facebook\.com\/.+/i',
+            'whatsapp' => 'nullable|regex:/^01[0125][0-9]{8}$/'
         ]);
 
         if ($validator->fails()) {
@@ -102,9 +102,11 @@ class RegisterController extends Controller
                 // owner Validation
                 'firstName' => 'required|alpha' ,
                 'lastName' => 'required|alpha' ,
+                'email' => 'required|email|unique:owners,email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
                 'mobile' => 'required|regex:/^01[0125][0-9]{8}$/',
                 'password' => 'required|min:6' ,
                 'confirmPassword' => 'required|same:password' ,
+                'avatar'=>'nullable|image:jpeg,jpg,png,gif|max:10000',
 
                 // store Validation
                 'storeName' => 'required|string' ,
@@ -112,9 +114,9 @@ class RegisterController extends Controller
                 'city'=> 'required|string|max:15',
                 'street'=> 'required|string|max:30',
                 'storeMobile_1'=> 'required|regex:/^01[0125][0-9]{8}$/',
-                'storeMobile_2' => 'sometimes|nullable|regex:/^01[0125][0-9]{8}$/' ,
-                'facebookLink' => 'sometimes|nullable|url|regex:/http(?:s):\/\/(?:www\.)facebook\.com\/.+/i',
-                'whatsapp' => 'sometimes|nullable|regex:/^01[0125][0-9]{8}$/'
+                'storeMobile_2' => 'nullable|regex:/^01[0125][0-9]{8}$/' ,
+                'facebookLink' => 'nullable|url|regex:/http(?:s):\/\/(?:www\.)facebook\.com\/.+/i',
+                'whatsapp' => 'nullable|regex:/^01[0125][0-9]{8}$/'
             ]);
             $RegData = $request->only([
                 'firstName',

@@ -65,20 +65,20 @@ class AdminController extends Controller
                     // User Validation
                     'firstName' => 'required|alpha' ,
                     'lastName' => 'required|alpha' ,
-                    'email' => 'required|email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
+                    'email' => 'required|email|unique:users,email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
                     'national_id' => 'required|regex:/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/',
                     'password' => 'required|min:6' ,
                     'confirmPassword' => 'required|same:password' ,
-                    'avatar'=>'sometimes|image:jpeg,jpg,png,gif|required|max:10000',
+                    'avatar'=>'nullable|image:jpeg,jpg,png,gif|max:10000',
 
                     // Contact Info Validation
                     'mobile_1'=> 'required|regex:/^01[0125][0-9]{8}$/',
-                    'mobile_2'=> 'sometimes|regex:/^01[0125][0-9]{8}$/',
-                    'government'=> 'required|nullable|string|max:15',
-                    'city'=> 'required|nullable|string|max:15',
-                    'street'=> 'required|nullable|string|max:30',
-                    'facebookLink' => 'sometimes|nullable|url|regex:/http(?:s):\/\/(?:www\.)facebook\.com\/.+/i',
-                    'whatsapp' => 'sometimes|nullable|regex:/^01[0125][0-9]{8}$/',
+                    'mobile_2'=> 'nullable|regex:/^01[0125][0-9]{8}$/',
+                    'government'=> 'required|string|max:15',
+                    'city'=> 'required|string|max:15',
+                    'street'=> 'required|string|max:30',
+                    'facebookLink' => 'nullable|url|regex:/http(?:s):\/\/(?:www\.)facebook\.com\/.+/i',
+                    'whatsapp' => 'nullable|regex:/^01[0125][0-9]{8}$/',
 
                 ]);
                 $RegData = $request->only([
