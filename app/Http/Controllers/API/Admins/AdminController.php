@@ -56,7 +56,7 @@ class AdminController extends Controller
 
     public function updateUser($id , Request $request)
     {
-
+        // get user from DB
         $user = User::find($id);
         if (!is_null($user))
         {
