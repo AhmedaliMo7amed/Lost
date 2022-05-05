@@ -75,7 +75,7 @@ class UserProfileController extends Controller
             return $this->returnError($ex->getCode(), $ex->getMessage());
         }
 
-        catch (Throwable $e){
+        catch (\Throwable $e){
             return $this->returnError($e->getCode(), $e->getMessage());
         }
 
@@ -85,7 +85,7 @@ class UserProfileController extends Controller
     {
         try {
             $validator =Validator::make($request->all() ,[
-                'avatar'=>'sometimes|image:jpeg,jpg,png,gif|required|max:10000',
+                'avatar'=>'nullable|mimes:jpeg,jpg,png,gif|required|max:10000',
             ]);
 
             if ($validator->fails()) {
@@ -99,17 +99,19 @@ class UserProfileController extends Controller
                     File::delete($oldimage);
                 }
                 $now = Carbon::now();
-                $path= 'public/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
-                $userPhoto = $request->avatar;
-                $userNewPhoto =Carbon::now()->format('His').$userPhoto->getClientOriginalName();
-                $userPhoto->storeAs($path,$userNewPhoto);
-                $newimage = 'storage/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
+                $destinationPath = public_path().'/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
+                $userPhoto = $request->file('avatar');
+                $name = $userPhoto->getClientOriginalName();
+                $userNewPhoto =Carbon::now()->format('His').$name;
+                $userPhoto->move($destinationPath,$userNewPhoto);
+                $newimage = 'images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
+
                 User::find(auth()->user()->id)->update([
                     'avatar'=> $newimage,
                 ]);
                 return $this->returnSuccessMessage('Avatar Changed Successfuly','S111');
             }else{
-                $basicimage= 'storage/assets/defult-user-avatar.png';
+                $basicimage= 'assets/defult-user-avatar.jpg';
                 User::find(auth()->user()->id)->update([
                     'avatar'=> $basicimage,
                 ]);

@@ -73,12 +73,15 @@ class ReportController extends Controller
             $finder = Report::where('serialNumber',$checker)->count();
 
             if ($finder < 1){
+
                 $now = Carbon::now();
-                $device_path= 'public/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
-                $devicePhoto = $request->devicePicture;
-                $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
-                $devicePhoto->storeAs($device_path,$deviceNewPhoto);
-                $input['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+                $destinationPath = public_path().'/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
+                $devicePhoto = $request->file('devicePicture');
+                $name = $devicePhoto->getClientOriginalName();
+                $deviceNewPhoto = Carbon::now()->format('His').$name;
+                $devicePhoto->move($destinationPath,$deviceNewPhoto);
+                $input['devicePicture'] = 'images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+
                 $user->report()->create($input);
                 return $this->returnSuccessMessage('report submitted Successfully');
             }else{
@@ -128,11 +131,12 @@ class ReportController extends Controller
                     File::delete($oldimage);
                 }
                 $now = Carbon::now();
-                $device_path= 'public/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
-                $devicePhoto = $request->devicePicture;
-                $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
-                $devicePhoto->storeAs($device_path,$deviceNewPhoto);
-                $input['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+                $destinationPath = public_path().'/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
+                $devicePhoto = $request->file('devicePicture');
+                $name = $devicePhoto->getClientOriginalName();
+                $deviceNewPhoto = Carbon::now()->format('His').$name;
+                $devicePhoto->move($destinationPath,$deviceNewPhoto);
+                $input['devicePicture'] = 'images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
 
                 $report->update($input);
                 return $this->returnSuccessMessage('Report Updated Successfully');

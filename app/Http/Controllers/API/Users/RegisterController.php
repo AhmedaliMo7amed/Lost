@@ -98,40 +98,34 @@ class RegisterController extends Controller
 
         if ($validator->fails()) {
             return $this->returnValidationError('E222',$validator);
-        } else {
-            try {
+        }
+        try {
+                $serial = null;
                 if(!empty($request->serialNumber)){
                     $serial = Report::where('serialNumber',$ReportData['serialNumber'])->first();
-                }
-                else{
-                    $serial = null;
                 }
 
                 if (is_null($serial))
                 {
-                    // Saving Device Picture in the images/devices path
-                    if ($request->hasFile('devicePicture'))
-                    {
                         $now = Carbon::now();
-                        $device_path= 'public/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
+                        $destinationPath = public_path().'/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
                         $devicePhoto = $request->file('devicePicture');
-                        $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
-                        $devicePhoto->storeAs($device_path,$deviceNewPhoto);
-                        $ReportData['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
-                    }else{
-                        return $this->returnError('E444','Device picture must be included');
-                    }
+                        $name = $devicePhoto->getClientOriginalName();
+                        $deviceNewPhoto = Carbon::now()->format('His').$name;
+                        $devicePhoto->move($destinationPath,$deviceNewPhoto);
+                        $ReportData['devicePicture'] = 'images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
 
                     // Saving User Picture in the public/images/avatars path (if founded)
-                    if($request->avatar)
-                    {
-                        $now = Carbon::now();
-                        $path= 'public/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
-                        $userPhoto = $request->avatar;
-                        $userNewPhoto =Carbon::now()->format('His').$userPhoto->getClientOriginalName();
-                        $userPhoto->storeAs($path,$userNewPhoto);
-                        $RegData['avatar'] = 'storage/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
-                    }
+                        if ($request->hasFile('avatar'))
+                        {
+                            $now = Carbon::now();
+                            $destinationPath = public_path().'/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
+                            $userPhoto = $request->file('avatar');
+                            $name = $userPhoto->getClientOriginalName();
+                            $userNewPhoto =Carbon::now()->format('His').$name;
+                            $userPhoto->move($destinationPath,$userNewPhoto);
+                            $RegData['avatar'] = 'images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
+                        }
 
                     $RegData['fullInfo'] = true;
                     // Hashing User Password
@@ -160,7 +154,7 @@ class RegisterController extends Controller
                 return $this->returnError($ex->getCode(), $ex->getMessage());
             }
 
-        }
+
     }
 
     public function completeSteps(Request $request)
@@ -239,35 +233,36 @@ class RegisterController extends Controller
                 'devicePicture',
                 'additional_info',
             ]);
-            if ($validator->fails()) {
-                return $this->returnValidationError('E222',$validator);
-            }else{
+                if ($validator->fails()) {
+                    return $this->returnValidationError('E222',$validator);
+                }
+
                 try {
-                    $serial = Report::where('serialNumber',$ReportData['serialNumber'])->first();
+                    $serial = null;
+                    if(!empty($request->serialNumber)){
+                        $serial = Report::where('serialNumber',$ReportData['serialNumber'])->first();
+                    }
 
                     if (is_null($serial))
                     {
-                        if ($request->hasFile('devicePicture'))
-                        {
-                            $now = Carbon::now();
-                            $device_path= 'public/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
-                            $devicePhoto = $request->file('devicePicture');
-                            $deviceNewPhoto = Carbon::now()->format('His').$devicePhoto->getClientOriginalName();
-                            $devicePhoto->storeAs($device_path,$deviceNewPhoto);
-                            $ReportData['devicePicture'] = 'storage/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+                        $now = Carbon::now();
+                        $destinationPath = public_path().'/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
+                        $devicePhoto = $request->file('devicePicture');
+                        $name = $devicePhoto->getClientOriginalName();
+                        $deviceNewPhoto = Carbon::now()->format('His').$name;
+                        $devicePhoto->move($destinationPath,$deviceNewPhoto);
+                        $ReportData['devicePicture'] = 'images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
 
-                        }else{
-                            return $this->returnError('E444','Device Picture Must Be Included');
-                        }
                         // Saving User Picture in the public/images/avatars path (if founded)
                         if($request->avatar)
                         {
                             $now = Carbon::now();
-                            $path= 'public/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
-                            $userPhoto = $request->avatar;
-                            $userNewPhoto =Carbon::now()->format('His').$userPhoto->getClientOriginalName();
-                            $userPhoto->storeAs($path,$userNewPhoto);
-                            $RegData['avatar'] = 'storage/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
+                            $destinationPath = public_path().'/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
+                            $userPhoto = $request->file('avatar');
+                            $name = $userPhoto->getClientOriginalName();
+                            $userNewPhoto =Carbon::now()->format('His').$name;
+                            $userPhoto->move($destinationPath,$userNewPhoto);
+                            $RegData['avatar'] = 'images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
                         }
 
                         // Hashing User Password
@@ -281,12 +276,12 @@ class RegisterController extends Controller
                             'email'=>$authUser->email,
                             'password'=>$request->password
                         ]);
+
                         // Create Contact Informations for the registerd User
                         $selection->contact()->create($ContactData);
 
                         // Create first Report for the registerd User
                         $selection->report()->create($ReportData);
-
                         return $this->returnData('Token',$token,'User & Info & Report Completed Successfully');
                     }
                 }catch (\Exception $ex){
@@ -294,7 +289,7 @@ class RegisterController extends Controller
                 }catch (\Throwable $e){
                     return $this->returnError($e->getCode(), $e->getMessage());
                 }
-            }
+
         }else{
             return $this->returnSuccessMessage('Nothing to Complete');
         }

@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('national_id')->nullable();
             $table->string('password')->nullable();
             $table->boolean('fullInfo')->default(false);
-            $table->string('avatar')->nullable()->default('storage/assets/defult-user-avatar.png');
+            $table->string('avatar')->nullable()->default('assets/defult-user-avatar.jpg');
             $table->timestamps();
         });
     }

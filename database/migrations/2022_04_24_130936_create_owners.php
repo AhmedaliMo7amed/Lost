@@ -22,7 +22,7 @@ class CreateOwners extends Migration
             $table->string('mobile')->nullable();
             $table->string('password')->nullable();
             $table->boolean('fullInfo')->default(false);
-            $table->string('avatar')->nullable()->default('storage/assets/defult-user-avatar.png');
+            $table->string('avatar')->nullable()->default('assets/defult-user-avatar.jpg');
             $table->timestamps();
         });
     }
