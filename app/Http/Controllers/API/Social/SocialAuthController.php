@@ -60,7 +60,6 @@ class SocialAuthController extends Controller
                     }
                     $token = Auth::guard('user-api')->login($user);
                     $user->token = $token;
-                    $user->fullInfo = false;
                     $myuser = new UserResource($user);
                     return $this->returnData('Data',$myuser,'User Account logged in now (from social Login By '.$provider_name.')');
                 }
@@ -79,7 +78,6 @@ class SocialAuthController extends Controller
                     }
                     $token = Auth::guard('owner-api')->login($owner);
                     $owner->token = $token;
-                    $owner->fullInfo = false;
                     $myowner = new UserResource($owner);
                     return $this->returnData('Data',$myowner,'Owner Account logged in now (from social Login By '.$provider_name.')');
                 }
@@ -116,7 +114,6 @@ class SocialAuthController extends Controller
                     }
                     $token = Auth::guard('user-api')->login($user);
                     $user->token = $token;
-                    $user->fullInfo = false;
                     $myuser = new UserResource($user);
                     return $this->returnData('Data',$myuser,'User Account logged in now (from social Login By '.$provider_name.')');
                 }
@@ -135,7 +132,6 @@ class SocialAuthController extends Controller
                     }
                     $token = Auth::guard('owner-api')->login($owner);
                     $owner->token = $token;
-                    $owner->fullInfo = false;
                     $myowner = new UserResource($owner);
                     return $this->returnData('Data',$myowner,'Owner Account logged in now (from social Login By '.$provider_name.')');
                 }
