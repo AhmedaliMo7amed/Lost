@@ -52,8 +52,8 @@ class UserProfileController extends Controller
     {
         try {
             $validator =Validator::make($request->all() ,[
-                'firstName' => 'required|alpha' ,
-                'lastName' => 'required|alpha' ,
+                'firstName' => 'required|regex:/^[\pL\s\-]+$/u' ,
+                'lastName' => 'required|regex:/^[\pL\s\-]+$/u' ,
                 'email' => 'required|email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
                 'national_id' => 'required|regex:/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/',
             ]);

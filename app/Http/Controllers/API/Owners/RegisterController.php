@@ -24,8 +24,8 @@ class RegisterController extends Controller
 
         $validator =Validator::make($request->all() ,[
             // owner Validation
-            'firstName' => 'required|alpha' ,
-            'lastName' => 'required|alpha' ,
+            'firstName' => 'required|regex:/^[\pL\s\-]+$/u' ,
+            'lastName' => 'required|regex:/^[\pL\s\-]+$/u' ,
             'email' => 'required|email|unique:owners,email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
             'mobile' => 'required|regex:/^01[0125][0-9]{8}$/',
             'password' => 'required|min:6' ,
@@ -95,14 +95,14 @@ class RegisterController extends Controller
         $authOwner = Auth::guard('owner-api')->user();
         $selection = Owner::find($authOwner->id);
 
-        if ($authOwner['fullInfo'] == false)
+        if ($selection['fullInfo'] == false)
         {
             $validator =Validator::make($request->all() ,[
 
                 // owner Validation
-                'firstName' => 'required|alpha' ,
-                'lastName' => 'required|alpha' ,
-                'email' => 'required|email|unique:owners,email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
+                'firstName' => 'required|regex:/^[\pL\s\-]+$/u' ,
+                'lastName' => 'required|regex:/^[\pL\s\-]+$/u' ,
+                'email' => 'required|email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
                 'mobile' => 'required|regex:/^01[0125][0-9]{8}$/',
                 'password' => 'required|min:6' ,
                 'confirmPassword' => 'required|same:password' ,
@@ -119,10 +119,13 @@ class RegisterController extends Controller
                 'whatsapp' => 'nullable|regex:/^01[0125][0-9]{8}$/'
             ]);
             $RegData = $request->only([
-                'firstName',
-                'lastName',
+                'firstName' ,
+                'lastName' ,
+                'email',
                 'mobile',
-                'password' ,
+                'password',
+                'confirmPassword',
+                'avatar' ,
             ]);
             $StoreData = $request->only([
                 'storeName',

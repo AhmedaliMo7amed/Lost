@@ -162,13 +162,13 @@ class RegisterController extends Controller
         $authUser = Auth::guard('user-api')->user();
         $selection = User::find($authUser->id);
 
-        if ($authUser['fullInfo'] == false)
+        if ($selection['fullInfo'] == false)
         {
             $validator =Validator::make($request->all() ,[
 
                 // User Validation
-                'firstName' => 'required|alpha' ,
-                'lastName' => 'sometimes|alpha' ,
+                'firstName' => 'required|regex:/^[\pL\s\-]+$/u' ,
+                'lastName' => 'required|regex:/^[\pL\s\-]+$/u' ,
                 'email' => 'required|email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
                 'national_id' => 'required|regex:/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/',
                 'password' => 'required|min:6' ,
@@ -202,10 +202,13 @@ class RegisterController extends Controller
                 'additional_info'=>'nullable|string|max:100',
             ]);
             $RegData = $request->only([
-                'firstName',
-                'lastName',
+                'firstName' ,
+                'lastName'  ,
+                'email',
                 'national_id',
-                'password' ,
+                'password',
+                'confirmPassword' ,
+                'avatar'
             ]);
             $ContactData = $request->only([
                 'mobile_1',
@@ -272,17 +275,19 @@ class RegisterController extends Controller
 
                         $selection->update($RegData);
                         // generate token and get user id for the auth user
+
                         $token = Auth::guard('user-api')->attempt([
-                            'email'=>$authUser->email,
-                            'password'=>$request->password
+                            'email' =>$authUser->email,
+                            'password' =>$request->password
                         ]);
 
                         // Create Contact Informations for the registerd User
                         $selection->contact()->create($ContactData);
-
                         // Create first Report for the registerd User
                         $selection->report()->create($ReportData);
                         return $this->returnData('Token',$token,'User & Info & Report Completed Successfully');
+                    }else{
+                        return $this->returnError('E888', 'Serial Reported Before ! try again');
                     }
                 }catch (\Exception $ex){
                     return $this->returnError($ex->getCode(), $ex->getMessage());

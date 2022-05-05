@@ -62,8 +62,8 @@ class OwnerProfileController extends Controller
     {
         try {
             $validator =Validator::make($request->all() ,[
-                'firstName' => 'required|alpha' ,
-                'lastName' => 'required|alpha' ,
+                'firstName' => 'required|regex:/^[\pL\s\-]+$/u' ,
+                'lastName' => 'required|regex:/^[\pL\s\-]+$/u' ,
                 'email' => 'required|email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
                 'mobile' => 'required|regex:/^01[0125][0-9]{8}$/',
             ]);
