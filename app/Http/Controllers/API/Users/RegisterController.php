@@ -14,6 +14,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Validator;
 use Auth;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Http\Resources\User as UserResource;
 
 
 class RegisterController extends Controller
@@ -22,12 +23,11 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-
         $validator =Validator::make($request->all() ,[
 
             // User Validation
-            'firstName' => 'required|alpha' ,
-            'lastName' => 'required|alpha' ,
+            'firstName' => 'required|regex:/^[\pL\s\-]+$/u' ,
+            'lastName' => 'required|regex:/^[\pL\s\-]+$/u' ,
             'email' => 'required|email|unique:users,email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
             'national_id' => 'required|regex:/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/',
             'password' => 'required|min:6' ,
@@ -143,7 +143,10 @@ class RegisterController extends Controller
                     $user->contact()->create($ContactData);
                     // Create first Report for the registerd User
                     $user->report()->create($ReportData);
-                    return $this->returnData('Token',$token,'User & Info & Report Registerd Successfully');
+
+                    $user->token = $token;
+                    $result = new UserResource($user);
+                    return $this->returnData('Data',$result,'User & Info & Report Registerd Successfully');
                 }else{
                     return $this->returnError('E444','Serial Number Is Reported Before');
                 }
@@ -285,7 +288,10 @@ class RegisterController extends Controller
                         $selection->contact()->create($ContactData);
                         // Create first Report for the registerd User
                         $selection->report()->create($ReportData);
-                        return $this->returnData('Token',$token,'User & Info & Report Completed Successfully');
+
+                        $selection->token = $token;
+                        $result = new UserResource($selection);
+                        return $this->returnData('Data',$result,'User & Info & Report Completed Successfully');
                     }else{
                         return $this->returnError('E888', 'Serial Reported Before ! try again');
                     }

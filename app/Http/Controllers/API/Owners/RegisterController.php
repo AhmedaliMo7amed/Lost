@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Validator;
 use Auth;
-
+use App\Http\Resources\Owner as OwnerResource;
 
 class RegisterController extends Controller
 {
@@ -87,7 +87,10 @@ class RegisterController extends Controller
         ]);
 
         $owner->store()->create($StoreData);
-        return $this->returnData('Token',$token,'Owner & Store Info Registerd Successfully');
+        $owner->token = $token;
+        $result = new OwnerResource($owner);
+
+        return $this->returnData('Data',$result,'Owner & Store Info Registerd Successfully');
     }
 
     public function completeSteps(Request $request)
@@ -152,7 +155,10 @@ class RegisterController extends Controller
                 'password'=>$request->password
             ]);
             $selection->store()->create($StoreData);
-            return $this->returnData('Token',$token,'Owner & Store Info Completed Successfully');
+
+            $selection->token = $token;
+            $result = new OwnerResource($selection);
+            return $this->returnData('Data',$result,'Owner & Store Info Completed Successfully');
         }else{
             return $this->returnSuccessMessage('Nothing to Complete');
         }

@@ -16,7 +16,7 @@ class UserWithCounter extends JsonResource
     {
         return [
             'userID' => $this->id,
-            'report_count'=> $this->report_count,
+            'reports_count'=> $this->report_count,
             'fullName' => $this->firstName .' '. $this->lastName ,
             'email' => $this->email,
             'ContactInfo' => new Contact($this->contact)
