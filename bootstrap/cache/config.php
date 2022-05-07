@@ -710,8 +710,8 @@
     ),
     'google' => 
     array (
-      'client_id' => '1047895875505-t9es3tir10s8nou95fb2op3u0nbgufhd.apps.googleusercontent.com',
-      'client_secret' => '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',
+      'client_id' => '1047895875505-qgbi3mp04v168ph8mo6ebi38iuvjh58m.apps.googleusercontent.com',
+      'client_secret' => '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',
       'redirect' => 'GOOGLE_REDIRECT_URI',
     ),
   ),
