@@ -92,7 +92,7 @@ class UserProfileController extends Controller
                 $code = $this->returnCodeAccordingToInput($validator);
                 return $this->returnValidationError($code, $validator);
             }
-            if($request->avatar)
+            if($request->hasFile('avatar'))
             {
                 $oldimage = auth()->user()->avatar;
                 if(File::exists($oldimage)) {
