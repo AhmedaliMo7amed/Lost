@@ -61,15 +61,14 @@ class ReviewController extends Controller
 
             if ($check == 0)
             {
-                if ($request->hasFile('theifPicture'))
+                if (!empty($request->theifPicture))
                 {
                     $now = Carbon::now();
-                    $destinationPath = public_path().'images/thieves/'.$now->year.'/'.'0'.$now->month.'/';
-                    $theifPhoto = $request->file('theifPicture');
-                    $name = $theifPhoto->getClientOriginalName();
-                    $theifNewPhoto =Carbon::now()->format('His').$name;
-                    $theifPhoto->move($destinationPath,$theifNewPhoto);
-                    $input['avatar'] = '/images/thieves/'.$now->year.'/'.'0'.$now->month.'/'.$theifNewPhoto;
+                    $theif_path= 'public/images/thieves/'.$now->year.'/'.'0'.$now->month.'/';
+                    $theifPhoto = $request->theifPicture;
+                    $theifNewPhoto = Carbon::now()->format('His').$theifPhoto->getClientOriginalName();
+                    $theifPhoto->storeAs($theif_path,$theifNewPhoto);
+                    $input['theifPicture'] = 'storage/images/thieves/'.$now->year.'/'.'0'.$now->month.'/'.$theifNewPhoto;
                 }
 
                 $input['report_id'] = $id ;
@@ -113,16 +112,13 @@ class ReviewController extends Controller
                     if(File::exists($oldimage)) {
                         File::delete($oldimage);
                     }
-
                     $now = Carbon::now();
-                    $destinationPath = public_path().'images/thieves/'.$now->year.'/'.'0'.$now->month.'/';
-                    $theifPhoto = $request->file('theifPicture');
-                    $name = $theifPhoto->getClientOriginalName();
-                    $theifNewPhoto =Carbon::now()->format('His').$name;
-                    $theifPhoto->move($destinationPath,$theifNewPhoto);
-                    $input['avatar'] = '/images/thieves/'.$now->year.'/'.'0'.$now->month.'/'.$theifNewPhoto;
+                    $theif_path= 'public/images/thieves/'.$now->year.'/'.'0'.$now->month.'/';
+                    $theifPhoto = $request->theifPicture;
+                    $theifNewPhoto = Carbon::now()->format('His').$theifPhoto->getClientOriginalName();
+                    $theifPhoto->storeAs($theif_path,$theifNewPhoto);
+                    $input['theifPicture'] = 'storage/images/thieves/'.$now->year.'/'.'0'.$now->month.'/'.$theifNewPhoto;
                 }
-
                 $review->update($input);
                 return $this->returnSuccessMessage('review Updated Successfully');
             }

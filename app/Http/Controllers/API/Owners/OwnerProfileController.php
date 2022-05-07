@@ -109,18 +109,17 @@ class OwnerProfileController extends Controller
                     File::delete($oldimage);
                 }
                 $now = Carbon::now();
-                $destinationPath = public_path().'/images/avatars/owners/'.$now->year.'/'.'0'.$now->month.'/';
-                $ownerPhoto = $request->file('avatar');
-                $name = $ownerPhoto->getClientOriginalName();
-                $ownerNewPhoto =Carbon::now()->format('His').$name;
-                $ownerPhoto->move($destinationPath,$ownerNewPhoto);
-                $newimage = '/images/avatars/owners/'.$now->year.'/'.'0'.$now->month.'/'.$ownerNewPhoto;
+                $owner_path= 'public/images/avatars/owners/'.$now->year.'/'.'0'.$now->month.'/';
+                $ownerPhoto = $request->avatar;
+                $ownerNewPhoto =Carbon::now()->format('His').$ownerPhoto->getClientOriginalName();
+                $ownerPhoto->storeAs($owner_path,$ownerNewPhoto);
+                $newimage = 'storage/images/avatars/owners/'.$now->year.'/'.'0'.$now->month.'/'.$ownerNewPhoto;
                 Owner::find(Auth::guard('owner-api')->user()->id)->update([
                     'avatar'=> $newimage,
                 ]);
                 return $this->returnSuccessMessage('Avatar Changed Successfuly','S111');
             }else{
-                $basicimage= '/assets/defult-user-avatar.png';
+                $basicimage= 'storage/assets/defult-user-avatar.png';
                 Owner::find(Auth::guard('owner-api')->user()->id)->update([
                     'avatar'=> $basicimage,
                 ]);

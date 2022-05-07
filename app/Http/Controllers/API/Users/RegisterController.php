@@ -113,7 +113,7 @@ class RegisterController extends Controller
                         $name = $devicePhoto->getClientOriginalName();
                         $deviceNewPhoto = Carbon::now()->format('His').$name;
                         $devicePhoto->move($destinationPath,$deviceNewPhoto);
-                        $ReportData['devicePicture'] = '/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+                        $ReportData['devicePicture'] = 'images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
 
                     // Saving User Picture in the public/images/avatars path (if founded)
                         if ($request->hasFile('avatar'))
@@ -124,9 +124,7 @@ class RegisterController extends Controller
                             $name = $userPhoto->getClientOriginalName();
                             $userNewPhoto =Carbon::now()->format('His').$name;
                             $userPhoto->move($destinationPath,$userNewPhoto);
-                            $RegData['avatar'] = '/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
-                        }else{
-                            $RegData['avatar'] = '/assets/defult-user-avatar.jpg';
+                            $RegData['avatar'] = 'images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
                         }
 
                     $RegData['fullInfo'] = true;
@@ -259,10 +257,10 @@ class RegisterController extends Controller
                         $name = $devicePhoto->getClientOriginalName();
                         $deviceNewPhoto = Carbon::now()->format('His').$name;
                         $devicePhoto->move($destinationPath,$deviceNewPhoto);
-                        $ReportData['devicePicture'] = '/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+                        $ReportData['devicePicture'] = 'images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
 
                         // Saving User Picture in the public/images/avatars path (if founded)
-                        if($request->hasFile('avatar'))
+                        if($request->avatar)
                         {
                             $now = Carbon::now();
                             $destinationPath = public_path().'/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
@@ -270,9 +268,7 @@ class RegisterController extends Controller
                             $name = $userPhoto->getClientOriginalName();
                             $userNewPhoto =Carbon::now()->format('His').$name;
                             $userPhoto->move($destinationPath,$userNewPhoto);
-                            $RegData['avatar'] = '/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
-                        }else{
-                            $RegData['avatar'] = '/assets/defult-user-avatar.jpg';
+                            $RegData['avatar'] = 'images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
                         }
 
                         // Hashing User Password
