@@ -80,7 +80,7 @@ class ReportController extends Controller
                 $name = $devicePhoto->getClientOriginalName();
                 $deviceNewPhoto = Carbon::now()->format('His').$name;
                 $devicePhoto->move($destinationPath,$deviceNewPhoto);
-                $input['devicePicture'] = 'images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+                $input['devicePicture'] = '/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
 
                 $user->report()->create($input);
                 return $this->returnSuccessMessage('report submitted Successfully');
@@ -136,7 +136,7 @@ class ReportController extends Controller
                 $name = $devicePhoto->getClientOriginalName();
                 $deviceNewPhoto = Carbon::now()->format('His').$name;
                 $devicePhoto->move($destinationPath,$deviceNewPhoto);
-                $input['devicePicture'] = 'images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+                $input['devicePicture'] = '/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
 
                 $report->update($input);
                 return $this->returnSuccessMessage('Report Updated Successfully');

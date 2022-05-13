@@ -45,6 +45,10 @@ class ReviewController extends Controller
             $owner = Owner::find(Auth::guard('owner-api')->user()->id);
             $input = $request->all();
 
+            if(empty(Report::find($id)))
+            {
+                return $this->returnError('E202', 'Report With #ID'.$id.' Not Founded');
+            }
             $validator = Validator::make($input,[
                 'theifName'=> 'required|string|nullable',
                 'theifNatID' =>'required|regex:/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/',
@@ -61,14 +65,15 @@ class ReviewController extends Controller
 
             if ($check == 0)
             {
-                if (!empty($request->theifPicture))
+                if ($request->hasFile('theifPicture'))
                 {
                     $now = Carbon::now();
-                    $theif_path= 'public/images/thieves/'.$now->year.'/'.'0'.$now->month.'/';
-                    $theifPhoto = $request->theifPicture;
-                    $theifNewPhoto = Carbon::now()->format('His').$theifPhoto->getClientOriginalName();
-                    $theifPhoto->storeAs($theif_path,$theifNewPhoto);
-                    $input['theifPicture'] = 'storage/images/thieves/'.$now->year.'/'.'0'.$now->month.'/'.$theifNewPhoto;
+                    $destinationPath = public_path().'images/thieves/'.$now->year.'/'.'0'.$now->month.'/';
+                    $theifPhoto = $request->file('theifPicture');
+                    $name = $theifPhoto->getClientOriginalName();
+                    $theifNewPhoto =Carbon::now()->format('His').$name;
+                    $theifPhoto->move($destinationPath,$theifNewPhoto);
+                    $input['avatar'] = '/images/thieves/'.$now->year.'/'.'0'.$now->month.'/'.$theifNewPhoto;
                 }
 
                 $input['report_id'] = $id ;
@@ -84,7 +89,7 @@ class ReviewController extends Controller
             }
         }catch (\Exception $e)
         {
-            return $this->returnError('E000','Something went wrong !');
+            return $this->returnError($e->getCode(), $e->getMessage());
         }
     }
     public function update($id , Request $request)
@@ -112,13 +117,16 @@ class ReviewController extends Controller
                     if(File::exists($oldimage)) {
                         File::delete($oldimage);
                     }
+
                     $now = Carbon::now();
-                    $theif_path= 'public/images/thieves/'.$now->year.'/'.'0'.$now->month.'/';
-                    $theifPhoto = $request->theifPicture;
-                    $theifNewPhoto = Carbon::now()->format('His').$theifPhoto->getClientOriginalName();
-                    $theifPhoto->storeAs($theif_path,$theifNewPhoto);
-                    $input['theifPicture'] = 'storage/images/thieves/'.$now->year.'/'.'0'.$now->month.'/'.$theifNewPhoto;
+                    $destinationPath = public_path().'images/thieves/'.$now->year.'/'.'0'.$now->month.'/';
+                    $theifPhoto = $request->file('theifPicture');
+                    $name = $theifPhoto->getClientOriginalName();
+                    $theifNewPhoto =Carbon::now()->format('His').$name;
+                    $theifPhoto->move($destinationPath,$theifNewPhoto);
+                    $input['avatar'] = '/images/thieves/'.$now->year.'/'.'0'.$now->month.'/'.$theifNewPhoto;
                 }
+
                 $review->update($input);
                 return $this->returnSuccessMessage('review Updated Successfully');
             }

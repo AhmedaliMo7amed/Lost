@@ -67,14 +67,17 @@ class RegisterController extends Controller
         // Hashing Owner Password
         $RegData['password'] = Hash::make($RegData['password']);
         // Saving User Picture in the public/images/avatars path (if founded)
-        if($request->avatar)
+        if ($request->hasFile('avatar'))
         {
             $now = Carbon::now();
-            $owner_path= 'public/images/avatars/owners/'.$now->year.'/'.'0'.$now->month.'/';
-            $ownerPhoto = $request->avatar;
-            $ownerNewPhoto =Carbon::now()->format('His').$ownerPhoto->getClientOriginalName();
-            $ownerPhoto->storeAs($owner_path,$ownerNewPhoto);
-            $RegData['avatar'] = 'storage/images/avatars/owners/'.$now->year.'/'.'0'.$now->month.'/'.$ownerNewPhoto;
+            $destinationPath = public_path().'/images/avatars/owners/'.$now->year.'/'.'0'.$now->month.'/';
+            $ownerPhoto = $request->file('avatar');
+            $name = $ownerPhoto->getClientOriginalName();
+            $ownerNewPhoto =Carbon::now()->format('His').$name;
+            $ownerPhoto->move($destinationPath,$ownerNewPhoto);
+            $RegData['avatar'] = '/images/avatars/owners/'.$now->year.'/'.'0'.$now->month.'/'.$ownerNewPhoto;
+        }else{
+            $RegData['avatar'] = '/assets/defult-user-avatar.jpg';
         }
         // Create Owner Account
         $RegData['fullInfo'] = true;
@@ -144,6 +147,19 @@ class RegisterController extends Controller
                 return $this->returnValidationError('E222',$validator);
             }
 
+            if ($request->hasFile('avatar'))
+            {
+                $now = Carbon::now();
+                $destinationPath = public_path().'/images/avatars/owners/'.$now->year.'/'.'0'.$now->month.'/';
+                $ownerPhoto = $request->file('avatar');
+                $name = $ownerPhoto->getClientOriginalName();
+                $ownerNewPhoto =Carbon::now()->format('His').$name;
+                $ownerPhoto->move($destinationPath,$ownerNewPhoto);
+                $RegData['avatar'] = '/images/avatars/owners/'.$now->year.'/'.'0'.$now->month.'/'.$ownerNewPhoto;
+            }else{
+                $RegData['avatar'] = '/assets/defult-user-avatar.jpg';
+            }
+
             // Hashing Owner Password
             $RegData['password'] = Hash::make($RegData['password']);
             $RegData['fullInfo'] = true;
@@ -155,8 +171,8 @@ class RegisterController extends Controller
                 'password'=>$request->password
             ]);
             $selection->store()->create($StoreData);
-
             $selection->token = $token;
+
             $result = new OwnerResource($selection);
             return $this->returnData('Data',$result,'Owner & Store Info Completed Successfully');
         }else{
