@@ -68,12 +68,14 @@ class ReviewController extends Controller
                 if ($request->hasFile('theifPicture'))
                 {
                     $now = Carbon::now();
-                    $destinationPath = public_path().'images/thieves/'.$now->year.'/'.'0'.$now->month.'/';
+                    $destinationPath = public_path().'/images/thieves/'.$now->year.'/'.'0'.$now->month.'/';
                     $theifPhoto = $request->file('theifPicture');
                     $name = $theifPhoto->getClientOriginalName();
                     $theifNewPhoto =Carbon::now()->format('His').$name;
                     $theifPhoto->move($destinationPath,$theifNewPhoto);
-                    $input['avatar'] = '/images/thieves/'.$now->year.'/'.'0'.$now->month.'/'.$theifNewPhoto;
+                    $input['theifPicture'] = '/images/thieves/'.$now->year.'/'.'0'.$now->month.'/'.$theifNewPhoto;
+                }else {
+                    $input['theifPicture'] = '/assets/defult-theif-avatar.png';
                 }
 
                 $input['report_id'] = $id ;
@@ -119,13 +121,16 @@ class ReviewController extends Controller
                     }
 
                     $now = Carbon::now();
-                    $destinationPath = public_path().'images/thieves/'.$now->year.'/'.'0'.$now->month.'/';
+                    $destinationPath = public_path().'/images/thieves/'.$now->year.'/'.'0'.$now->month.'/';
                     $theifPhoto = $request->file('theifPicture');
                     $name = $theifPhoto->getClientOriginalName();
                     $theifNewPhoto =Carbon::now()->format('His').$name;
                     $theifPhoto->move($destinationPath,$theifNewPhoto);
-                    $input['avatar'] = '/images/thieves/'.$now->year.'/'.'0'.$now->month.'/'.$theifNewPhoto;
+                    $input['theifPicture'] = '/images/thieves/'.$now->year.'/'.'0'.$now->month.'/'.$theifNewPhoto;
+                }else {
+                    $input['theifPicture'] = '/assets/defult-theif-avatar.png';
                 }
+
 
                 $review->update($input);
                 return $this->returnSuccessMessage('review Updated Successfully');

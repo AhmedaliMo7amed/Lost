@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a835cc54-8141-4172-965d-26b4b3d96c32" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/OwnerProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/OwnerProfileController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/RegisterController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/ReviewController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/ReviewController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Users/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Users/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Users/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Users/ReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Users/UserProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Users/UserProfileController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,7 +244,8 @@
       <workItem from="1651147410431" duration="11686000" />
       <workItem from="1651239257263" duration="35000" />
       <workItem from="1652447123802" duration="73000" />
-      <workItem from="1652447269866" duration="960000" />
+      <workItem from="1652447269866" duration="1440000" />
+      <workItem from="1652448764630" duration="42000" />
     </task>
     <servers />
   </component>
