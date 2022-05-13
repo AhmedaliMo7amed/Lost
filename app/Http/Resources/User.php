@@ -21,7 +21,7 @@ class User extends JsonResource
             'lastName' => $this->lastName,
             'email' => $this->email,
             'national_id' => $this->national_id,
-            'avarar' =>$this->avatar,
+            'avarar' =>config('constants.base_url').$this->avatar,
             'fullInfo'=>$this->fullInfo,
             'created_at' => $this->created_at->format('d/m/y'),
             'updated_at' => $this->updated_at->format('d/m/y')

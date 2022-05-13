@@ -21,7 +21,7 @@ class Review extends JsonResource
             'theifName' => $this->theifName,
             'theifNatID' => $this->theifNatID,
             'theifMobile' => $this->theifMobile,
-            'theifPicture' => $this->theifPicture,
+            'theifPicture' => config('constants.base_url').$this->theifPicture,
             'additional_info' => $this->additional_info,
             'Owner' => new Owner($this->storeOwner),
             'Report' => new Report($this->report)

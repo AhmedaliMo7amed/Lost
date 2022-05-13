@@ -30,7 +30,7 @@ class Report extends JsonResource
             'backCrach_top' => $this->backCrach_top,
             'backCrach_center' =>$this->backCrach_center,
             'backCrach_bottom' => $this->backCrach_bottom,
-            'devicePicture' => $this->devicePicture,
+            'devicePicture' => config('constants.base_url').$this->devicePicture,
             'additional_info' => $this->additional_info,
             'staus'=>$this->additional_info,
             'created_at' => $this->created_at->format('d/m/y'),

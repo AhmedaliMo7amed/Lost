@@ -256,6 +256,10 @@
     ),
     'prefix' => 'laravel_cache',
   ),
+  'constants' => 
+  array (
+    'base_url' => 'http://127.0.0.1:8000',
+  ),
   'cors' => 
   array (
     'paths' => 

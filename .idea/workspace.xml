@@ -3,7 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="a835cc54-8141-4172-965d-26b4b3d96c32" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Owner.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Owner.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/OwnerRevResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/OwnerRevResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Report.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Report.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Review.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Review.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/UserWithoutToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/UserWithoutToken.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Resources/getReviews.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/getReviews.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/reportReview.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/reportReview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/cache/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/cache/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/cache/routes-v7.php" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/cache/routes-v7.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,7 +254,8 @@
       <workItem from="1651239257263" duration="35000" />
       <workItem from="1652447123802" duration="73000" />
       <workItem from="1652447269866" duration="1440000" />
-      <workItem from="1652448764630" duration="267000" />
+      <workItem from="1652448764630" duration="2831000" />
+      <workItem from="1652452716414" duration="1389000" />
     </task>
     <servers />
   </component>

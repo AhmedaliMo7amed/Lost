@@ -21,7 +21,7 @@ class getReviews extends JsonResource
             'theifName' => $this->theifName,
             'theifNatID' => $this->theifNatID,
             'theifMobile' => $this->theifMobile,
-            'theifPicture' => $this->theifPicture,
+            'theifPicture' => config('constants.base_url').$this->theifPicture,
             'additional_info' => $this->additional_info,
             'Owner' => new OwnerRevResource($this->storeOwner),
             'Report' => new Report($this->report)
