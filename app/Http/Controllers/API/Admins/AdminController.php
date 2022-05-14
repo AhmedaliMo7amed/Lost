@@ -103,14 +103,18 @@ class AdminController extends Controller
                     $code = $this->returnCodeAccordingToInput($validator);
                     return $this->returnValidationError($code, $validator);
                 }
-                if($request->avatar)
+                // Saving User Picture in the public/images/avatars path (if founded)
+                if ($request->hasFile('avatar'))
                 {
                     $now = Carbon::now();
-                    $path= 'public/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
-                    $userPhoto = $request->avatar;
-                    $userNewPhoto =Carbon::now()->format('His').$userPhoto->getClientOriginalName();
-                    $userPhoto->storeAs($path,$userNewPhoto);
-                    $RegData['avatar'] = 'storage/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
+                    $destinationPath = public_path().'/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
+                    $userPhoto = $request->file('avatar');
+                    $name = $userPhoto->getClientOriginalName();
+                    $userNewPhoto =Carbon::now()->format('His').$name;
+                    $userPhoto->move($destinationPath,$userNewPhoto);
+                    $RegData['avatar'] = '/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
+                }else{
+                    $RegData['avatar'] = '/assets/defult-user-avatar.jpg';
                 }
                 $RegData['password'] = Hash::make($RegData['password']);
 

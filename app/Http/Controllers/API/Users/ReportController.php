@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\Users;
 
 use App\Http\Controllers\Controller;
-use App\Models\ContactInfo;
 use App\Models\Report;
 use App\Models\Review;
 use App\Models\User;
@@ -15,9 +14,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Report as ReportResource;
-use App\Http\Resources\Contact as ContactResource;
 use mysql_xdevapi\Exception;
 
 class ReportController extends Controller
@@ -102,6 +99,11 @@ class ReportController extends Controller
         $report = Report::find($id);
         $input = $request->all();
 
+        if (empty($report))
+        {
+            return $this->returnError('E555', 'No Report Has #ID'.$id);
+        }
+
         if ($report['user_id'] == $authUser->id)
         {
             $validator =Validator::make($request->all() ,[
@@ -152,12 +154,13 @@ class ReportController extends Controller
 
         $authUser = Auth::guard('user-api')->user();
         $report = Report::find($id);
+
         if (!is_null($report))
         {
             $result = new ReportResource($report);
-            return $this->returnData('data',$result);
+            return $this->returnData('Data',$result);
         }else{
-            return $this->returnError('E404','report Not found');
+            return $this->returnError('E555', 'No Report Has #ID'.$id);
         }
     }
 
@@ -166,6 +169,12 @@ class ReportController extends Controller
 
         $authUser = Auth::guard('user-api')->user();
         $report = Report::find($id);
+
+        if (empty($report))
+        {
+            return $this->returnError('E555', 'No Report Has #ID'.$id);
+        }
+
         if ($report['user_id'] == $authUser->id)
         {
             $report->delete();
@@ -188,7 +197,7 @@ class ReportController extends Controller
         if (count($reviews))
         {
             $result = getReviews::collection($reviews);
-            return $this->returnData('reviews', $result);
+            return $this->returnData('Data', $result);
         }else{
             return $this->returnError('E404','No Reviews for this user');
         }
@@ -201,18 +210,18 @@ class ReportController extends Controller
 
         $access = Report::find($id);
         $authUser = Auth::guard('user-api')->user();
-        if (is_null($access))
+        if (empty($access))
         {
-            return $this->returnError('E555', 'Report not founded');
+            return $this->returnError('E555', 'No Report Has #ID'.$id);
         }
         if (!is_null($access) && $access->user_id == $authUser->id)
         {
-            $review = Review::with('storeOwner')->where('report_id',$id)->first();
+            $review = Review::with('storeOwner')->where('report_id',$id)->get();
 
             if (!is_null($review))
             {
-                $result = new reportReview($review);
-                return $this->returnData('review', $result );
+                $result = reportReview::collection($review);
+                return $this->returnData('Data', $result );
             }else{
                 return $this->returnError('E404','Sorry, it is still not reviewed');
             }

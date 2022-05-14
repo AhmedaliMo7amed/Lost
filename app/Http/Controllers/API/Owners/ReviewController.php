@@ -3,16 +3,11 @@
 namespace App\Http\Controllers\API\Owners;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Contact as ContactResource;
-use App\Http\Resources\Report as ReportResource;
-use App\Http\Resources\User as UserResource;
-use App\Http\Resources\Owner as OwnerResource;
 use App\Http\Resources\Review as ReviewResource;
 use App\Http\Resources\getReviews as getReviews;
 use App\Models\Owner;
 use App\Models\Report;
 use App\Models\Review;
-use App\Models\User;
 use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -32,7 +27,7 @@ class ReviewController extends Controller
         if (count($reviews))
         {
             $newReviews = getReviews::collection($reviews);
-            return $this->returnData('reviews',$newReviews,'All Reviews of current Owner Sended');
+            return $this->returnData('Data',$newReviews,'All Reviews of current Owner Sended');
         }
         else{
             return $this->returnError('E404','Owner dont have any Review');
@@ -84,10 +79,10 @@ class ReviewController extends Controller
                 $owner->review()->create($input);
                 $update->update($status);
 
-                return $this->returnSuccessMessage('review submitted Successfully');
+                return $this->returnSuccessMessage('Review submitted Successfully');
             }
             else{
-                return $this->returnSuccessMessage('you have already reviewed this device!');
+                return $this->returnSuccessMessage('You have already reviewed this device!');
             }
         }catch (\Exception $e)
         {
@@ -100,10 +95,14 @@ class ReviewController extends Controller
         $review = Review::find($id);
         $input = $request->all();
 
+        if (empty($review))
+        {
+            return $this->returnError('E555', 'No review Has #ID'.$id);
+        }
+
         if ($review['owner_id'] == $authOwner->id)
         {
             $validator =Validator::make($request->all() ,[
-
                 'theifName'=> 'required|string|nullable',
                 'theifNatID' =>'required|regex:/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/',
                 'theifMobile' => 'sometimes|nullable|regex:/^01[0125][0-9]{8}$/' ,
@@ -133,7 +132,7 @@ class ReviewController extends Controller
 
 
                 $review->update($input);
-                return $this->returnSuccessMessage('review Updated Successfully');
+                return $this->returnSuccessMessage('Review Updated Successfully');
             }
         }else{
             return $this->returnError('E555', 'Authorization : You Cant Edit This review');
@@ -149,12 +148,12 @@ class ReviewController extends Controller
             if ($review['owner_id'] == $authOwner->id)
             {
                 $review->delete();
-                return $this->returnSuccessMessage('review Deleted Successfully');
+                return $this->returnSuccessMessage('Review Deleted Successfully');
             }else{
                 return $this->returnError('E555', 'Authorization : You Cant Delete This review');
             }
         }else{
-            return $this->returnError('E555', 'Review Not Founded , Check ID');
+            return $this->returnError('E555', 'No Review Has #ID'.$id);
         }
 
     }
@@ -170,10 +169,10 @@ class ReviewController extends Controller
 
             $result = new ReviewResource($Myreview);
 
-            return $this->returnData('Review',$result);
+            return $this->returnData('Data',$result,'Review #ID'.$id.'Sended Successfully');
 
         } else{
-            return $this->returnError('E404','Review Not found');
+            return $this->returnError('E555', 'No Review Has #ID'.$id);
         }
     }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\Owners;
 
 use App\Http\Controllers\Controller;
-use App\Models\Owner;
 use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
 use App\Http\Resources\Owner as OwnerResource;
@@ -27,8 +26,7 @@ class AuthController extends Controller
             $validator = Validator::make($request->all(), $rules);
 
             if ($validator->fails()) {
-                $code = $this->returnCodeAccordingToInput($validator);
-                return $this->returnValidationError($code, $validator);
+                return $this->returnValidationError('E222',$validator);
             }
 
             //login

@@ -33,14 +33,14 @@ class OwnerProfileController extends Controller
             ]);
 
             if ($validator->fails()) {
-                $code = $this->returnCodeAccordingToInput($validator);
-                return $this->returnValidationError($code, $validator);
+                return $this->returnValidationError('E222',$validator);
             }
 
             $cheker = Hash::check($request->current_password, Auth::guard('owner-api')->user()->password);
             if ($cheker == true)
             {
-                $owner = Owner::find(Auth::guard('owner-api')->user())->first()->update(['password'=> Hash::make($request->new_password)]);
+                $owner = Owner::find(Auth::guard('owner-api')
+                         ->user())->first()->update(['password'=> Hash::make($request->new_password)]);
                 return $this->returnSuccessMessage('password Changed Successfuly','S111');
 
             }else{
@@ -69,9 +69,9 @@ class OwnerProfileController extends Controller
             ]);
 
             if ($validator->fails()) {
-                $code = $this->returnCodeAccordingToInput($validator);
-                return $this->returnValidationError($code, $validator);
+                return $this->returnValidationError('E222',$validator);
             }
+
             Owner::find(Auth::guard('owner-api')->user()->id)->update([
                 'firstName'=> $request['firstName'],
                 'lastName'=> $request['lastName'],
@@ -99,9 +99,9 @@ class OwnerProfileController extends Controller
             ]);
 
             if ($validator->fails()) {
-                $code = $this->returnCodeAccordingToInput($validator);
-                return $this->returnValidationError($code, $validator);
+                return $this->returnValidationError('E222',$validator);
             }
+
             if($request->avatar)
             {
                 $oldimage = Auth::guard('owner-api')->user()->avatar;

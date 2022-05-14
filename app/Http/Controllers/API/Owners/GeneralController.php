@@ -20,7 +20,7 @@ class GeneralController extends Controller
         {
             $result = ReportResource::collection($report);
 
-            return $this->returnData('data',$result);
+            return $this->returnData('Data',$result,'All Reports Sended');
         }else{
             return $this->returnError('E404','No Reports Founded');
         }
@@ -32,7 +32,7 @@ class GeneralController extends Controller
         if (!is_null($report))
         {
             $result = new ReportResource($report);
-            return $this->returnData('data',$result);
+            return $this->returnData('Data',$result,'Report Sended Successfully');
         }else{
             return $this->returnError('E404','report Not found');
         }
@@ -43,9 +43,9 @@ class GeneralController extends Controller
         $seracher = Report::where('serialNumber' , $request->serial)->first();
         if (!is_null($seracher)) {
             $result =  new ReportResource($seracher);
-            return $this->returnData('data',$result , 'Report Founded By Serial Number');
+            return $this->returnData('Data',$result , 'Report Founded By Serial Number');
         }else{
-            return $this->returnError('404' , 'no report founded');
+            return $this->returnError('404' , 'No report founded');
         }
     }
 
@@ -94,7 +94,6 @@ class GeneralController extends Controller
             }
             if ($request->backCrach_center)
             {
-
                 $reportQuery->where('backCrach_center' , $request->backCrach_center );
             }
             if ($request->backCrach_bottom)
@@ -106,11 +105,10 @@ class GeneralController extends Controller
             if (count($reports))
             {
                 $result = ReportResource::collection($reports);
-                return $this->returnData('data',$result , 'filters applied');
+                return $this->returnData('Data',$result , 'Filters applied');
             }else{
                 return $this->returnError('404' , 'no report founded');
             }
-
 
         }
     }

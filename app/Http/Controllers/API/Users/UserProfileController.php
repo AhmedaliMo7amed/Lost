@@ -59,9 +59,9 @@ class UserProfileController extends Controller
             ]);
 
             if ($validator->fails()) {
-                $code = $this->returnCodeAccordingToInput($validator);
-                return $this->returnValidationError($code, $validator);
+                return $this->returnValidationError('E222',$validator);
             }
+
             User::find(Auth::guard('user-api')->user()->id)->update([
                 'firstName'=> $request['firstName'],
                 'lastName'=> $request['lastName'],
@@ -89,9 +89,9 @@ class UserProfileController extends Controller
             ]);
 
             if ($validator->fails()) {
-                $code = $this->returnCodeAccordingToInput($validator);
-                return $this->returnValidationError($code, $validator);
+                return $this->returnValidationError('E222',$validator);
             }
+
             if($request->hasFile('avatar'))
             {
                 $oldimage = auth()->user()->avatar;
