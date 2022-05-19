@@ -64,6 +64,7 @@ class RegisterController extends Controller
             'facebookLink' ,
             'whatsapp'
         ]);
+
         // Hashing Owner Password
         $RegData['password'] = Hash::make($RegData['password']);
         // Saving User Picture in the public/images/avatars path (if founded)
@@ -108,7 +109,7 @@ class RegisterController extends Controller
                 // owner Validation
                 'firstName' => 'required|regex:/^[\pL\s\-]+$/u' ,
                 'lastName' => 'required|regex:/^[\pL\s\-]+$/u' ,
-                'email' => 'required|email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
+                'email' => 'required|email|unique:owners,email,'.$selection->id.'|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/',
                 'mobile' => 'required|regex:/^01[0125][0-9]{8}$/',
                 'password' => 'required|min:6' ,
                 'confirmPassword' => 'required|same:password' ,

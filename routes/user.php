@@ -22,6 +22,7 @@ Route::group(['prefix'=>'user' ,'middleware'=>'checkUserToken:user-api','namespa
     Route::group(['prefix'=>'profile'],function(){
         Route::post('change-password', 'UserProfileController@changePassword');
         Route::post('update-info', 'UserProfileController@updatePersonalInfo');
+        Route::post('update-contact', 'UserProfileController@updateContactInfo');
         Route::post('update-avatar', 'UserProfileController@updateAvatar');
     });
 
@@ -31,7 +32,7 @@ Route::group(['prefix'=>'user' ,'middleware'=>'checkUserToken:user-api','namespa
         Route::post('submit', 'ReportController@store');
         Route::post('update/{id}', 'ReportController@update');
         Route::get('show/{id}', 'ReportController@show');
-        Route::get('delete/{id}', 'ReportController@destroy');
+        Route::delete('delete/{id}', 'ReportController@destroy');
         Route::get('reviews', 'ReportController@allReviews');
         Route::get('review/{id}', 'ReportController@reportReview');
     });

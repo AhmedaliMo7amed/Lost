@@ -31,9 +31,9 @@ class UserProfileController extends Controller
             ]);
 
             if ($validator->fails()) {
-                $code = $this->returnCodeAccordingToInput($validator);
-                return $this->returnValidationError($code, $validator);
+                return $this->returnValidationError('E222',$validator);
             }
+
             User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
             return $this->returnSuccessMessage('password Changed Successfuly','S111');
         }
@@ -51,10 +51,11 @@ class UserProfileController extends Controller
     public function updatePersonalInfo(Request $request)
     {
         try {
+            $user = User::find(Auth::guard('user-api')->user()->id);
             $validator =Validator::make($request->all() ,[
                 'firstName' => 'required|regex:/^[\pL\s\-]+$/u' ,
                 'lastName' => 'required|regex:/^[\pL\s\-]+$/u' ,
-                'email' => 'required|email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
+                'email' => 'required|email|unique:users,email,'.$user->id.'|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/',
                 'national_id' => 'required|regex:/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/',
             ]);
 
@@ -81,40 +82,88 @@ class UserProfileController extends Controller
 
     }
 
-    public function updateAvatar(Request $request)
+    public function updateContactInfo(Request $request)
     {
         try {
             $validator =Validator::make($request->all() ,[
-                'avatar'=>'nullable|mimes:jpeg,jpg,png,gif|required|max:10000',
+                // Contact Info Validation
+                'mobile_1'=> 'required|regex:/^01[0125][0-9]{8}$/',
+                'mobile_2'=> 'nullable|regex:/^01[0125][0-9]{8}$/',
+                'government'=> 'required|string|max:15',
+                'city'=> 'required|string|max:15',
+                'street'=> 'required|string|max:30',
+                'facebookLink' => 'nullable|url|regex:/http(?:s):\/\/(?:www\.)facebook\.com\/.+/i',
+                'whatsapp' => 'nullable|regex:/^01[0125][0-9]{8}$/',
+            ]);
+
+            $ContactData = $request->only([
+                'mobile_1',
+                'mobile_2',
+                'government',
+                'city',
+                'street',
+                'facebookLink' ,
+                'whatsapp'
             ]);
 
             if ($validator->fails()) {
                 return $this->returnValidationError('E222',$validator);
             }
 
-            if($request->hasFile('avatar'))
+            $user = User::find(Auth::guard('user-api')->user()->id);
+            $user->contact()->update($ContactData);
+
+            return $this->returnSuccessMessage('Personal Info Changed Successfuly','S111');
+        }
+
+        catch (\Exception $ex){
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+
+        catch (\Throwable $e){
+            return $this->returnError($e->getCode(), $e->getMessage());
+        }
+
+    }
+
+    public function updateAvatar(Request $request)
+    {
+        try {
+            $validator =Validator::make($request->all() ,[
+                'avatar'=>'nullable|mimes:jpeg,jpg,png,gif|max:10000',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->returnValidationError('E222',$validator);
+            }
+
+            $oldimage = public_path().auth()->user()->avatar;
+            if(auth()->user()->avatar != '/assets/defult-user-avatar.jpg')
             {
-                $oldimage = auth()->user()->avatar;
                 if(File::exists($oldimage)) {
                     File::delete($oldimage);
                 }
+            }
+            if($request->hasFile('avatar'))
+            {
                 $now = Carbon::now();
                 $destinationPath = public_path().'/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
                 $userPhoto = $request->file('avatar');
                 $name = $userPhoto->getClientOriginalName();
                 $userNewPhoto =Carbon::now()->format('His').$name;
                 $userPhoto->move($destinationPath,$userNewPhoto);
-                $newimage = 'images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
+                $newimage = '/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/'.$userNewPhoto;
 
                 User::find(auth()->user()->id)->update([
                     'avatar'=> $newimage,
                 ]);
                 return $this->returnSuccessMessage('Avatar Changed Successfuly','S111');
             }else{
-                $basicimage= 'assets/defult-user-avatar.jpg';
+                $basicimage= '/assets/defult-user-avatar.jpg';
                 User::find(auth()->user()->id)->update([
                     'avatar'=> $basicimage,
                 ]);
+                return $this->returnSuccessMessage('Avatar Reseted Successfuly','S111');
             }
 
         }

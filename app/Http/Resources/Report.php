@@ -32,11 +32,10 @@ class Report extends JsonResource
             'backCrach_bottom' => $this->backCrach_bottom,
             'devicePicture' => config('constants.base_url').$this->devicePicture,
             'additional_info' => $this->additional_info,
-            'staus'=>$this->additional_info,
+            'status'=>$this->status,
             'created_at' => $this->created_at->format('d/m/y'),
             'updated_at' => $this->updated_at->format('d/m/y'),
             'user' => new UserWithoutToken($this->user),
-            'contactInfo' => new Contact($this->user->contact),
         ];
     }
 }

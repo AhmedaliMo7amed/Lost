@@ -61,10 +61,11 @@ class OwnerProfileController extends Controller
     public function updatePersonalInfo(Request $request)
     {
         try {
+            $owner = Owner::find(Auth::guard('owner-api')->user()->id);
             $validator =Validator::make($request->all() ,[
                 'firstName' => 'required|regex:/^[\pL\s\-]+$/u' ,
                 'lastName' => 'required|regex:/^[\pL\s\-]+$/u' ,
-                'email' => 'required|email|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/' ,
+                'email' => 'required|email|unique:owners,email,'.$owner->id.'|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/',
                 'mobile' => 'required|regex:/^01[0125][0-9]{8}$/',
             ]);
 
@@ -79,6 +80,49 @@ class OwnerProfileController extends Controller
                 'mobile'=> $request['mobile']
             ]);
             return $this->returnSuccessMessage('Personal Info Changed Successfuly','S111');
+        }
+        catch (\Exception $ex){
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+
+        catch (Throwable $e){
+            return $this->returnError($e->getCode(), $e->getMessage());
+        }
+
+    }
+
+    public function updateStoreInfo(Request $request)
+    {
+        try {
+            $owner = Owner::find(Auth::guard('owner-api')->user()->id);
+            $validator =Validator::make($request->all() ,[
+                // store Validation
+                'storeName' => 'required|string' ,
+                'government'=> 'required|string|max:15',
+                'city'=> 'required|string|max:15',
+                'street'=> 'required|string|max:30',
+                'storeMobile_1'=> 'required|regex:/^01[0125][0-9]{8}$/',
+                'storeMobile_2' => 'nullable|regex:/^01[0125][0-9]{8}$/' ,
+                'facebookLink' => 'nullable|url|regex:/http(?:s):\/\/(?:www\.)facebook\.com\/.+/i',
+                'whatsapp' => 'nullable|regex:/^01[0125][0-9]{8}$/'
+            ]);
+
+            $StoreData = $request->only([
+                'storeName',
+                'government',
+                'city',
+                'street',
+                'storeMobile_1',
+                'storeMobile_2',
+                'facebookLink' ,
+                'whatsapp'
+            ]);
+            if ($validator->fails()) {
+                return $this->returnValidationError('E222',$validator);
+            }
+            $owner->store()->update($StoreData);
+
+            return $this->returnSuccessMessage('Store Info Changed Successfuly','S111');
         }
 
         catch (\Exception $ex){
@@ -95,19 +139,23 @@ class OwnerProfileController extends Controller
     {
         try {
             $validator =Validator::make($request->all() ,[
-                'avatar'=>'sometimes|image:jpeg,jpg,png,gif|required|max:10000',
+                'avatar'=>'nullable|mimes:jpeg,jpg,png,gif|max:10000',
             ]);
 
             if ($validator->fails()) {
                 return $this->returnValidationError('E222',$validator);
             }
 
-            if($request->avatar)
+            $oldimage = public_path().Auth::guard('owner-api')->user()->avatar;
+            if(Auth::guard('owner-api')->user()->avatar != '/assets/defult-user-avatar.jpg')
             {
-                $oldimage = Auth::guard('owner-api')->user()->avatar;
                 if(File::exists($oldimage)) {
                     File::delete($oldimage);
                 }
+            }
+
+            if($request->avatar)
+            {
                 $now = Carbon::now();
                 $destinationPath = public_path().'/images/avatars/owners/'.$now->year.'/'.'0'.$now->month.'/';
                 $ownerPhoto = $request->file('avatar');
@@ -124,6 +172,7 @@ class OwnerProfileController extends Controller
                 Owner::find(Auth::guard('owner-api')->user()->id)->update([
                     'avatar'=> $basicimage,
                 ]);
+                return $this->returnSuccessMessage('Avatar Reseted Successfuly','S111');
             }
 
         } catch (\Exception $ex){

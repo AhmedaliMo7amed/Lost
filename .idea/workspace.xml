@@ -4,16 +4,18 @@
     <list default="true" id="a835cc54-8141-4172-965d-26b4b3d96c32" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Admins/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Admins/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/GeneralController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/GeneralController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/OwnerProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/OwnerProfileController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/ReviewController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/ReviewController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Users/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Users/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Users/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Users/ReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Users/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Users/RegisterController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Users/UserProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Users/UserProfileController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Owner.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Owner.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/OwnerRevResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/OwnerRevResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Report.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Report.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Review.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Review.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/UserWithCounter.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/UserWithCounter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/cache/routes-v7.php" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/cache/routes-v7.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/defult-user-avatar.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/store-owner.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/store-owner.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/user.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -258,7 +260,8 @@
       <workItem from="1652448764630" duration="2831000" />
       <workItem from="1652452716414" duration="1389000" />
       <workItem from="1652458360799" duration="617000" />
-      <workItem from="1652536353644" duration="5853000" />
+      <workItem from="1652536353644" duration="6770000" />
+      <workItem from="1652962166758" duration="18022000" />
     </task>
     <servers />
   </component>

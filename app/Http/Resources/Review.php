@@ -23,7 +23,7 @@ class Review extends JsonResource
             'theifMobile' => $this->theifMobile,
             'theifPicture' => config('constants.base_url').$this->theifPicture,
             'additional_info' => $this->additional_info,
-            'Owner' => new Owner($this->storeOwner),
+            'Owner' => new OwnerRevResource($this->storeOwner),
             'Report' => new Report($this->report)
         ];
     }

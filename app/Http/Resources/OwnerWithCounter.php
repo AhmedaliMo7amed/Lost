@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserWithCounter extends JsonResource
+class OwnerWithCounter extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,13 @@ class UserWithCounter extends JsonResource
     public function toArray($request)
     {
         return [
-            'userID' => $this->id,
-            'reports_count'=> $this->report_count,
+            'ownerID' => $this->id,
+            'reviews_count'=> $this->review_count,
             'fullName' => $this->firstName .' '. $this->lastName ,
+            'email' => $this->email,
+            'mobile' => $this->mobile,
+            'avarar' =>config('constants.base_url').$this->avatar,
+            'Store' => new Store($this->store)
         ];
     }
 }

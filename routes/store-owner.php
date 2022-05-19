@@ -25,6 +25,7 @@ Route::group(['prefix'=>'store-owner' ,'middleware'=>'checkOwnerToken:owner-api'
     Route::group(['prefix'=>'profile', 'middleware'=>'checkOwnerToken:owner-api'],function(){
         Route::post('change-password', 'OwnerProfileController@changePassword');
         Route::post('update-info', 'OwnerProfileController@updatePersonalInfo');
+        Route::post('update-store', 'OwnerProfileController@updateStoreInfo');
         Route::post('update-avatar', 'OwnerProfileController@updateAvatar');
     });
     /// review routes
@@ -32,7 +33,7 @@ Route::group(['prefix'=>'store-owner' ,'middleware'=>'checkOwnerToken:owner-api'
         Route::get('get-all', 'ReviewController@index' );
         Route::post('submit/{id}', 'ReviewController@store' );
         Route::post('update/{id}', 'ReviewController@update');
-        Route::post('delete/{id}', 'ReviewController@destroy');
+        Route::delete('delete/{id}', 'ReviewController@destroy');
         Route::get('show/{id}', 'ReviewController@show');
     });
     /// user reports routes
