@@ -34,7 +34,6 @@ class UpdatePwdController extends Controller
             'confirmPassword' => 'required|same:password' ,
             'pinCode' => 'required' ,
         ]);
-
         if ($validator->fails()) {
             return $this->returnValidationError('E222',$validator);
         }else {
@@ -43,13 +42,23 @@ class UpdatePwdController extends Controller
     }
 
     private function changePassword($request) {
-        $email = DB::table('password_resets')->select('email')->where('token', $request->pinCode)->pluck('email');
-        $user = User::whereEmail($email)->first();
-        $user->update([
-            'password'=>bcrypt($request->password)
-        ]);
-        $this->getPinCode($request)->delete();
-        return $this->returnSuccessMessage('User Password Changed Successfully');
+        try {
+            $email = DB::table('password_resets')->select('email')->where('token', $request->pinCode)->pluck('email');
+            if (count($email) > 0 )
+            {
+                $user = User::whereEmail($email)->first();
+                $user->update([
+                    'password'=>bcrypt($request->password)
+                ]);
+                $this->getPinCode($request)->delete();
+                return $this->returnSuccessMessage('User Password Changed Successfully');
+            }else
+            {
+                return $this->returnError('E001', 'PIN Code Not Attached to any email ! check PIN Code');
+            }
+        }catch (\Exception $ex) {
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
     }
 
     private function getPinCode($request){

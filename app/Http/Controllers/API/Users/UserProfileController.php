@@ -113,7 +113,7 @@ class UserProfileController extends Controller
             $user = User::find(Auth::guard('user-api')->user()->id);
             $user->contact()->update($ContactData);
 
-            return $this->returnSuccessMessage('Personal Info Changed Successfuly','S111');
+            return $this->returnSuccessMessage('Contact Info Changed Successfuly','S111');
         }
 
         catch (\Exception $ex){

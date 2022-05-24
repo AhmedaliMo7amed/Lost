@@ -25,7 +25,7 @@ class StoreInfo extends Model
 
     public function storeOwner()
     {
-        return $this->belongsTo(storeOwner::class , 'owner_id');
+        return $this->belongsTo(Owner::class , 'owner_id');
     }
 }
 

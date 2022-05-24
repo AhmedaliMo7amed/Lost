@@ -10,12 +10,9 @@ Route::group(['prefix'=>'store-owner','namespace'=>'API\Owners'],function (){
     Route::post('reset-password', 'ResetPwdReqController@reqForgotPassword');
     Route::post('confirm-token', 'UpdatePwdController@confirmToken');
     Route::post('update-password', 'UpdatePwdController@updatePassword');
-
-
 });
 
 /**********  Protected Routes For Owner **********/
-
 Route::group(['prefix'=>'store-owner' ,'middleware'=>'checkOwnerToken:owner-api','namespace'=>'API\Owners'],function (){
     // geneal routes
     Route::post('logout', 'AuthController@logout');

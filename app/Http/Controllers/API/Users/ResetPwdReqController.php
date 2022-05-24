@@ -26,7 +26,7 @@ class ResetPwdReqController extends Controller
             return $this->returnError('E404','User Email not found');
         } else {
             $this->sendEmail($request->email);
-            return $this->returnSuccessMessage('User Password reset link has been sent to '. $request->email , 'S111');
+            return $this->returnSuccessMessage('User Password reset PIN Code has been sent to '. $request->email , 'S111');
         }
     }
 
