@@ -46,7 +46,7 @@ class ReportController extends Controller
             $input = $request->all();
 
             $validator = Validator::make($input,[
-                'serialNumber'=>'sometimes|regex:/^\d{15,17}$/',
+                'serialNumber'=>'nullable|regex:/^\d{15,17}$/',
                 'type'=>'required|alpha',
                 'brand'=>'required|alpha',
                 'model'=>'required',

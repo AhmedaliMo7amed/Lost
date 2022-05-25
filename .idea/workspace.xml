@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a835cc54-8141-4172-965d-26b4b3d96c32" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/ResetPwdReqController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/ResetPwdReqController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/UpdatePwdController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/UpdatePwdController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Users/ResetPwdReqController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Users/ResetPwdReqController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Users/UpdatePwdController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Users/UpdatePwdController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Users/UserProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Users/UserProfileController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/StoreInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/StoreInfo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/store-owner.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/store-owner.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Users/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Users/ReportController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -259,7 +252,7 @@
       <workItem from="1652962166758" duration="19527000" />
       <workItem from="1653234892509" duration="32000" />
       <workItem from="1653311738632" duration="59000" />
-      <workItem from="1653311815125" duration="5388000" />
+      <workItem from="1653311815125" duration="6084000" />
     </task>
     <servers />
   </component>
