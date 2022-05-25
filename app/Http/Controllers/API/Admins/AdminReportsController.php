@@ -52,21 +52,21 @@ class AdminReportsController extends Controller
         try {
             $validator = Validator::make($request->all() ,[
                 'userID' => 'required',
-                'serialNumber'=>'sometimes|regex:/^\d{15,17}$/',
+                'serialNumber'=>'nullable|regex:/^\d{15,17}$/',
                 'type'=>'required|alpha',
                 'brand'=>'required|alpha',
                 'model'=>'required',
                 'color'=>'required',
                 'RAM'=>'required|numeric',
                 'ROM'=>'required|numeric',
-                'frontCrach_top'=>'sometimes|nullable|boolean',
-                'frontCrach_center'=>'sometimes|nullable|boolean',
-                'frontCrach_bottom'=>'sometimes|nullable|boolean',
-                'backCrach_top'=>'sometimes|nullable|boolean',
-                'backCrach_center'=>'sometimes|nullable|boolean',
-                'backCrach_bottom'=>'sometimes|nullable|boolean',
-                'devicePicture'=>'required|mimes:jpeg,jpg,png,gif|required|max:10000',
-                'additional_info'=>'sometimes|nullable|string|max:100',
+                'frontCrach_top'=>'nullable|boolean',
+                'frontCrach_center'=>'nullable|boolean',
+                'frontCrach_bottom'=>'nullable|boolean',
+                'backCrach_top'=>'nullable|boolean',
+                'backCrach_center'=>'nullable|boolean',
+                'backCrach_bottom'=>'nullable|boolean',
+                'devicePicture'=>'required|mimes:jpeg,jpg,png,gif|max:10000',
+                'additional_info'=>'nullable|string|max:100',
             ]);
             if ($validator->fails()) {
                 return $this->returnError('E147', $validator->errors()->first());

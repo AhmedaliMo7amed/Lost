@@ -45,11 +45,11 @@ class ReviewController extends Controller
                 return $this->returnError('E202', 'Report With #ID'.$id.' Not Founded');
             }
             $validator = Validator::make($input,[
-                'theifName'=> 'required|string|nullable',
+                'theifName'=> 'required|string',
                 'theifNatID' =>'required|regex:/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/',
-                'theifMobile' => 'sometimes|nullable|regex:/^01[0125][0-9]{8}$/' ,
-                'theifPicture' => 'sometimes|nullable|image:jpeg,jpg,png,gif|max:10000',
-                'additional_info' => 'sometimes|nullable|string|max:100',
+                'theifMobile' => 'nullable|regex:/^01[0125][0-9]{8}$/' ,
+                'theifPicture' => 'nullable|image:jpeg,jpg,png,gif|max:10000',
+                'additional_info' => 'nullable|string|max:100',
             ]);
 
             if ($validator->fails()) {
@@ -103,11 +103,11 @@ class ReviewController extends Controller
         if ($review['owner_id'] == $authOwner->id)
         {
             $validator =Validator::make($request->all() ,[
-                'theifName'=> 'required|string|nullable',
+                'theifName'=> 'required|string',
                 'theifNatID' =>'required|regex:/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/',
-                'theifMobile' => 'sometimes|nullable|regex:/^01[0125][0-9]{8}$/' ,
-                'theifPicture' => 'sometimes|nullable|image:jpeg,jpg,png,gif|max:10000',
-                'additional_info' => 'sometimes|nullable|string|max:100',
+                'theifMobile' => 'nullable|regex:/^01[0125][0-9]{8}$/' ,
+                'theifPicture' => 'nullable|image:jpeg,jpg,png,gif|max:10000',
+                'additional_info' => 'nullable|string|max:100',
             ]);
             if ($validator->fails()) {
                 return $this->returnValidationError('E222',$validator);
