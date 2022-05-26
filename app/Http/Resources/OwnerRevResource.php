@@ -20,7 +20,7 @@ class OwnerRevResource extends JsonResource
             'lastName' => $this->lastName,
             'email' => $this->email,
             'mobile' => $this->mobile,
-            'avarar' =>config('constants.base_url').$this->avatar,
+            'avatar' =>config('constants.base_url').$this->avatar,
             'fullInfo'=>$this->fullInfo,
             'created_at' => $this->created_at->format('d/m/y'),
             'updated_at' => $this->updated_at->format('d/m/y'),

@@ -20,7 +20,7 @@ class OwnerWithCounter extends JsonResource
             'fullName' => $this->firstName .' '. $this->lastName ,
             'email' => $this->email,
             'mobile' => $this->mobile,
-            'avarar' =>config('constants.base_url').$this->avatar,
+            'avatar' =>config('constants.base_url').$this->avatar,
             'Store' => new Store($this->store)
         ];
     }
