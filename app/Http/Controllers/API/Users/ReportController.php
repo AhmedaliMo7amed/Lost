@@ -66,10 +66,12 @@ class ReportController extends Controller
                 return $this->returnError('E147', $validator->errors()->first());
             }
 
-            $checker = $input['serialNumber'];
-            $finder = Report::where('serialNumber',$checker)->count();
+            $finder = 0;
+            if (!is_null($request->serialNumber)) {
+                $finder = Report::where('serialNumber',$request->serialNumber)->count();
+            }
 
-            if ($finder < 1){
+            if ($finder == 0){
 
                 $now = Carbon::now();
                 $destinationPath = public_path().'/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
@@ -127,7 +129,18 @@ class ReportController extends Controller
             ]);
             if ($validator->fails()) {
                 return $this->returnValidationError('E222',$validator);
-            }else{
+            }
+
+            $finder = 0;
+
+            if (!is_null($request->serialNumber)) {
+                if ($request->serialNumber != $report->serialNumber)
+                {
+                    $finder = Report::where('serialNumber',$request->serialNumber)->count();
+                }
+            }
+
+            if ($finder == 0){
                 $oldimage = $report->devicePicture;
                 if(File::exists($oldimage)) {
                     File::delete($oldimage);
@@ -142,7 +155,11 @@ class ReportController extends Controller
 
                 $report->update($input);
                 return $this->returnSuccessMessage('Report Updated Successfully');
+            }else{
+                return $this->returnError('E102', 'Serial Reported Before .. Try Again!');
             }
+
+
         }else{
             return $this->returnError('E555', 'Authorization : You Cant Edit This Report');
         }
@@ -218,7 +235,7 @@ class ReportController extends Controller
         {
             $review = Review::with('storeOwner')->where('report_id',$id)->get();
 
-            if (!is_null($review))
+            if (count($review) > 0)
             {
                 $result = reportReview::collection($review);
                 return $this->returnData('Data', $result );

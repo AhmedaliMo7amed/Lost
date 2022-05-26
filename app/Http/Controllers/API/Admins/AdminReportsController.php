@@ -79,10 +79,12 @@ class AdminReportsController extends Controller
                 return $this->returnError('E404', 'User #'.$request->userID. ' Not Founded');
             }
 
-            $checker = $request['serialNumber'];
-            $finder = Report::where('serialNumber',$checker)->count();
+            $finder = 0;
+            if (!is_null($request->serialNumber)) {
+                $finder = Report::where('serialNumber',$request->serialNumber)->count();
+            }
 
-            if ($finder < 1){
+            if ($finder  == 0){
 
                 $now = Carbon::now();
                 $destinationPath = public_path().'/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
@@ -136,7 +138,17 @@ class AdminReportsController extends Controller
             ]);
             if ($validator->fails()) {
                 return $this->returnValidationError('E222',$validator);
-            }else{
+            }
+
+            $finder = 0;
+            if (!is_null($request->serialNumber)) {
+                if ($request->serialNumber != $report->serialNumber)
+                {
+                    $finder = Report::where('serialNumber',$request->serialNumber)->count();
+                }
+            }
+            if ($finder == 0)
+            {
                 $oldimage = $report->devicePicture;
                 if(File::exists($oldimage)) {
                     File::delete($oldimage);
@@ -152,6 +164,8 @@ class AdminReportsController extends Controller
 
                 $report->update($input);
                 return $this->returnSuccessMessage('Report Updated Successfully');
+            }else{
+                return $this->returnError('E102', 'Serial Is reported once before');
             }
     }
 
