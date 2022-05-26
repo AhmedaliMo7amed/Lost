@@ -132,7 +132,6 @@ class ReportController extends Controller
             }
 
             $finder = 0;
-
             if (!is_null($request->serialNumber)) {
                 if ($request->serialNumber != $report->serialNumber)
                 {

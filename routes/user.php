@@ -16,6 +16,7 @@ Route::group(['prefix'=>'user','namespace'=>'API\Users'],function (){
 Route::group(['prefix'=>'user' ,'middleware'=>'checkUserToken:user-api','namespace'=>'API\Users'],function (){
     /// general routes
     Route::post('logout', 'AuthController@logout');
+    Route::get('getInfo', 'AuthController@getAuthInfo');
     Route::post('complete-info', 'RegisterController@completeSteps');
 
     /// profile routes

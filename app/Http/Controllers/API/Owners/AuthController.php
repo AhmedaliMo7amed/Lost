@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
 use App\Http\Resources\Owner as OwnerResource;
+use App\Http\Resources\OwnerRevResource;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Validator;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,6 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return $this->returnValidationError('E222',$validator);
             }
-
             //login
             $credentials = $request->only(['email', 'password']);
             $token = Auth::guard('owner-api')->attempt($credentials);
@@ -58,4 +58,16 @@ class AuthController extends Controller
 
     }
 
+    public function getAuthInfo()
+    {
+
+        try {
+            $owner = Auth::guard('owner-api')->user();
+            $myowner = new OwnerRevResource($owner);
+            return $this->returnData('Data', $myowner,'Owner Info send successfully');
+        } catch (\Exception $ex) {
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+
+    }
 }

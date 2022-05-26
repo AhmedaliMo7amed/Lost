@@ -8,6 +8,7 @@ use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Resources\User as UserResource;
+use App\Http\Resources\UserWithoutToken;
 use Validator;
 use Auth;
 
@@ -61,4 +62,16 @@ class AuthController extends Controller
         return $this->returnSuccessMessage('User Logged out successfully');
     }
 
+    public function getAuthInfo()
+    {
+
+        try {
+            $user = Auth::guard('user-api')->user();
+            $myuser = new UserWithoutToken($user);
+            return $this->returnData('Data', $myuser,'User Info send successfully');
+        } catch (\Exception $ex) {
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+
+    }
 }

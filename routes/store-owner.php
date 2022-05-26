@@ -16,6 +16,7 @@ Route::group(['prefix'=>'store-owner','namespace'=>'API\Owners'],function (){
 Route::group(['prefix'=>'store-owner' ,'middleware'=>'checkOwnerToken:owner-api','namespace'=>'API\Owners'],function (){
     // geneal routes
     Route::post('logout', 'AuthController@logout');
+    Route::get('getInfo', 'AuthController@getAuthInfo');
     Route::post('complete-info', 'RegisterController@completeSteps');
 
     /// profile routes
