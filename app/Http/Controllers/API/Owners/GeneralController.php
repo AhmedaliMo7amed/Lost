@@ -73,11 +73,11 @@ class GeneralController extends Controller
             }
             if ($request->RAM)
             {
-                $reportQuery->where('RAM' ,$request->ram);
+                $reportQuery->where('RAM' ,$request->RAM);
             }
-            if ($request->RAM)
+            if ($request->ROM)
             {
-                $reportQuery->where('ROM' ,$request->rom);
+                $reportQuery->where('ROM' ,$request->ROM);
             }
             if ($request->orderBy)
             {
