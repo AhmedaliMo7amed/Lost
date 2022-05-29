@@ -54,56 +54,55 @@ class GeneralController extends Controller
         $cheker = Report::get();
         if (!is_null($cheker)) {
             $reportQuery = Report::with('user');
-
-            if ($request->type)
+            if ($request->has('type') && $request->type != null)
             {
                 $reportQuery->where('type' ,$request->type );
             }
-            if ($request->brand)
+            if ($request->has('brand') && $request->brand != null)
             {
-                $reportQuery->where('brand' ,$request->brand );
+                $reportQuery->where('brand' ,$request->brand);
             }
-            if ($request->model)
+            if ($request->has('model') && $request->model != null)
             {
                 $reportQuery->where('model' ,$request->model);
             }
-            if ($request->color)
+            if ($request->has('color') && $request->color != null)
             {
                 $reportQuery->where('color' ,$request->color);
             }
-            if ($request->RAM)
+            if ($request->has('RAM') && $request->RAM != null)
             {
                 $reportQuery->where('RAM' ,$request->RAM);
             }
-            if ($request->ROM)
+            if ($request->has('ROM') && $request->ROM != null);
             {
                 $reportQuery->where('ROM' ,$request->ROM);
             }
-            if ($request->orderBy)
+            if ($request->has('orderBy') && $request->orderBy != null)
             {
                 $reportQuery->orderBy('created_at' , $request->orderBy);
             }
-            if ($request->frontCrach_top)
+            if ($request->has('frontCrach_top') && $request->frontCrach_top != null)
             {
                 $reportQuery->where('frontCrach_top' , $request->frontCrach_top );
             }
-            if ($request->frontCrach_center)
+            if ($request->has('frontCrach_center') && $request->frontCrach_center != null)
             {
-                $reportQuery->where('frontCrach_center' , $request->frontCrach_center );
+                $reportQuery->where('frontCrach_center' , $request->frontCrach_center);
             }
-            if ($request->frontCrach_bottom)
+            if ($request->has('frontCrach_bottom') && $request->frontCrach_bottom != null)
             {
                 $reportQuery->where('frontCrach_bottom' , $request->frontCrach_bottom );
             }
-            if ($request->backCrach_top)
+            if ($request->has('backCrach_top') && $request->backCrach_top != null)
             {
                 $reportQuery->where('backCrach_top' , $request->backCrach_top );
             }
-            if ($request->backCrach_center)
+            if ($request->has('backCrach_center') && $request->backCrach_center != null)
             {
-                $reportQuery->where('backCrach_center' , $request->backCrach_center );
+                $reportQuery->where('backCrach_center' , $request->backCrach_center);
             }
-            if ($request->backCrach_bottom)
+            if ($request->has('backCrach_bottom') && $request->backCrach_bottom != null)
             {
                 $reportQuery->where('backCrach_bottom' , $request->backCrach_bottom );
             }
