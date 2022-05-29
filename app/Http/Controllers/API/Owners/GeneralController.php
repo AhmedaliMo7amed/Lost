@@ -107,7 +107,6 @@ class GeneralController extends Controller
             {
                 $reportQuery->where('backCrach_bottom' , $request->backCrach_bottom );
             }
-
             $reports = $reportQuery->get();
             if (count($reports))
             {
