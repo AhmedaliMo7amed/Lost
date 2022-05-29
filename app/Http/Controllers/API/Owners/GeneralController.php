@@ -54,55 +54,56 @@ class GeneralController extends Controller
         $cheker = Report::get();
         if (!is_null($cheker)) {
             $reportQuery = Report::with('user');
-            if ($request->has('type') && $request->type != null)
+
+            if ($request->type)
             {
                 $reportQuery->where('type' ,$request->type );
             }
-            if ($request->has('brand') && $request->brand != null)
+            if ($request->brand && $request->brand != 'null' && $request->brand != 'NULL')
             {
-                $reportQuery->where('brand' ,$request->brand);
+                $reportQuery->where('brand' ,$request->brand );
             }
-            if ($request->has('model') && $request->model != null)
+            if ($request->model && $request->model != 'null' && $request->model != 'NULL')
             {
                 $reportQuery->where('model' ,$request->model);
             }
-            if ($request->has('color') && $request->color != null)
+            if ($request->color && $request->color != 'null' && $request->color != 'NULL')
             {
                 $reportQuery->where('color' ,$request->color);
             }
-            if ($request->has('RAM') && $request->RAM != null)
+            if ($request->RAM && $request->RAM != 'null' && $request->RAM != 'NULL')
             {
                 $reportQuery->where('RAM' ,$request->RAM);
             }
-            if ($request->has('ROM') && $request->ROM != null);
+            if ($request->ROM && $request->ROM != 'null' && $request->ROM != 'NULL')
             {
                 $reportQuery->where('ROM' ,$request->ROM);
             }
-            if ($request->has('orderBy') && $request->orderBy != null)
+            if ($request->orderBy && $request->orderBy != 'null' && $request->orderBy != 'NULL')
             {
                 $reportQuery->orderBy('created_at' , $request->orderBy);
             }
-            if ($request->has('frontCrach_top') && $request->frontCrach_top != null)
+            if ($request->frontCrach_top && $request->frontCrach_top != 'null' && $request->frontCrach_top != 'NULL')
             {
                 $reportQuery->where('frontCrach_top' , $request->frontCrach_top );
             }
-            if ($request->has('frontCrach_center') && $request->frontCrach_center != null)
+            if ($request->frontCrach_center && $request->frontCrach_center != 'null' && $request->frontCrach_center != 'NULL')
             {
-                $reportQuery->where('frontCrach_center' , $request->frontCrach_center);
+                $reportQuery->where('frontCrach_center' , $request->frontCrach_center );
             }
-            if ($request->has('frontCrach_bottom') && $request->frontCrach_bottom != null)
+            if ($request->frontCrach_bottom && $request->frontCrach_bottom != 'null' && $request->frontCrach_bottom != 'NULL')
             {
                 $reportQuery->where('frontCrach_bottom' , $request->frontCrach_bottom );
             }
-            if ($request->has('backCrach_top') && $request->backCrach_top != null)
+            if ($request->backCrach_top && $request->backCrach_top != 'null' && $request->backCrach_top != 'NULL')
             {
                 $reportQuery->where('backCrach_top' , $request->backCrach_top );
             }
-            if ($request->has('backCrach_center') && $request->backCrach_center != null)
+            if ($request->backCrach_center && $request->backCrach_center != 'null' && $request->backCrach_center != 'NULL')
             {
-                $reportQuery->where('backCrach_center' , $request->backCrach_center);
+                $reportQuery->where('backCrach_center' , $request->backCrach_center );
             }
-            if ($request->has('backCrach_bottom') && $request->backCrach_bottom != null)
+            if ($request->backCrach_bottom && $request->backCrach_bottom != 'null' && $request->backCrach_bottom != 'NULL')
             {
                 $reportQuery->where('backCrach_bottom' , $request->backCrach_bottom );
             }
@@ -112,7 +113,7 @@ class GeneralController extends Controller
                 $result = ReportResource::collection($reports);
                 return $this->returnData('Data',$result , 'Filters applied');
             }else{
-                return $this->returnError('404' , 'no report founded');
+                return $this->returnError('404' , 'No report founded with these filters');
             }
 
         }
