@@ -65,11 +65,19 @@ class GeneralController extends Controller
             }
             if ($request->model)
             {
-                $reportQuery->where('brand' ,$request->model);
+                $reportQuery->where('model' ,$request->model);
             }
             if ($request->color)
             {
                 $reportQuery->where('color' ,$request->color);
+            }
+            if ($request->ram)
+            {
+                $reportQuery->where('RAM' ,$request->ram);
+            }
+            if ($request->rom)
+            {
+                $reportQuery->where('ROM' ,$request->rom);
             }
             if ($request->orderBy)
             {
@@ -81,7 +89,6 @@ class GeneralController extends Controller
             }
             if ($request->frontCrach_center)
             {
-
                 $reportQuery->where('frontCrach_center' , $request->frontCrach_center );
             }
             if ($request->frontCrach_bottom)
