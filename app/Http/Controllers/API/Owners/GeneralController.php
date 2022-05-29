@@ -71,11 +71,11 @@ class GeneralController extends Controller
             {
                 $reportQuery->where('color' ,$request->color);
             }
-            if ($request->ram)
+            if ($request->RAM)
             {
                 $reportQuery->where('RAM' ,$request->ram);
             }
-            if ($request->rom)
+            if ($request->RAM)
             {
                 $reportQuery->where('ROM' ,$request->rom);
             }
