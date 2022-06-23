@@ -143,11 +143,15 @@ class ReviewController extends Controller
     {
         $authOwner = Auth::guard('owner-api')->user();
         $review = Review::find($id);
+        $report = Report::find($review->report_id);
+
         if (!is_null($review))
         {
             if ($review['owner_id'] == $authOwner->id)
             {
                 $review->delete();
+                $report['status'] = 0;
+                $report->update();
                 return $this->returnSuccessMessage('Review Deleted Successfully');
             }else{
                 return $this->returnError('E555', 'Authorization : You Cant Delete This review');
@@ -166,7 +170,6 @@ class ReviewController extends Controller
         if (!is_null($review))
         {
             $Myreview = Review::find($id)->with('storeOwner','report')->first();
-
             $result = new ReviewResource($Myreview);
 
             return $this->returnData('Data',$result,'Review #ID'.$id.'Sended Successfully');

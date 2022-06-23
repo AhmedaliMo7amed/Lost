@@ -24,7 +24,6 @@ class ReportController extends Controller
     // get all reports
     public function index()
     {
-
         $authUser = Auth::guard('user-api')->user()->id;
         $reports = Report::with('user')->where('user_id',$authUser)->get();
 
@@ -80,13 +79,12 @@ class ReportController extends Controller
                 $deviceNewPhoto = Carbon::now()->format('His').$name;
                 $devicePhoto->move($destinationPath,$deviceNewPhoto);
                 $input['devicePicture'] = '/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
-
                 $user->report()->create($input);
+
                 return $this->returnSuccessMessage('report submitted Successfully');
             }else{
                 return $this->returnError('E102', 'Serial Is reported once before');
             }
-
         }catch (Exception $e)
         {
             return $this->returnError($e->getCode(), $e->getMessage());
@@ -96,11 +94,9 @@ class ReportController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $authUser = Auth::guard('user-api')->user();
         $report = Report::find($id);
         $input = $request->all();
-
         if (empty($report))
         {
             return $this->returnError('E555', 'No Report Has #ID'.$id);
@@ -152,13 +148,18 @@ class ReportController extends Controller
                 $devicePhoto->move($destinationPath,$deviceNewPhoto);
                 $input['devicePicture'] = '/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
 
+                if($report->status == 1) {
+                    $input['status'] = 1;
+                }
+                if($report->status == 0) {
+                    $input['status'] = 0;
+                }
+
                 $report->update($input);
                 return $this->returnSuccessMessage('Report Updated Successfully');
             }else{
                 return $this->returnError('E102', 'Serial Reported Before .. Try Again!');
             }
-
-
         }else{
             return $this->returnError('E555', 'Authorization : You Cant Edit This Report');
         }
