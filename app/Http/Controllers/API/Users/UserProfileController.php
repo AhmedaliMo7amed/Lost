@@ -37,11 +37,9 @@ class UserProfileController extends Controller
             User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
             return $this->returnSuccessMessage('password Changed Successfuly','S111');
         }
-
         catch (\Exception $ex){
             return $this->returnError($ex->getCode(), $ex->getMessage());
         }
-
         catch (Throwable $e){
             return $this->returnError($e->getCode(), $e->getMessage());
         }

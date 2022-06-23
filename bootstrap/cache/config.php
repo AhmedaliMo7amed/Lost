@@ -434,17 +434,16 @@
       'private' => NULL,
       'passphrase' => NULL,
     ),
-    'ttl' => 240,
+    'ttl' => NULL,
     'refresh_ttl' => 20160,
     'algo' => 'HS256',
     'required_claims' => 
     array (
       0 => 'iss',
       1 => 'iat',
-      2 => 'exp',
-      3 => 'nbf',
-      4 => 'sub',
-      5 => 'jti',
+      2 => 'nbf',
+      3 => 'sub',
+      4 => 'jti',
     ),
     'persistent_claims' => 
     array (
