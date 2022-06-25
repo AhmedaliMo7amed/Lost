@@ -40,13 +40,19 @@ class GeneralController extends Controller
 
     public function serialSerach(Request $request)
     {
-        $seracher = Report::where('serialNumber' , $request->serial)->first();
-        if (!is_null($seracher)) {
-            $result =  new ReportResource($seracher);
-            return $this->returnData('Data',$result , 'Report Founded By Serial Number');
+        if ($request->serial != null)
+        {
+            $seracher = Report::where('serialNumber' , $request->serial)->first();
+            if (!is_null($seracher)) {
+                $result =  new ReportResource($seracher);
+                return $this->returnData('Data',$result , 'Report Founded By Serial Number');
+            }else{
+                return $this->returnError('404' , 'No report founded');
+            }
         }else{
-            return $this->returnError('404' , 'No report founded');
+            return $this->returnError('404' , 'IMEI / Serial Number is Required');
         }
+
     }
 
     public function list(Request $request)
