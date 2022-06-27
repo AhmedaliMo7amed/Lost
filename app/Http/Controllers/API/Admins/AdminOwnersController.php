@@ -229,6 +229,14 @@ class AdminOwnersController extends Controller
         $owner = Owner::find($id);
         if (!is_null($owner))
         {
+            $oldimage = public_path().$owner->avatar;
+            if($owner->avatar != '/assets/defult-user-avatar.jpg')
+            {
+                if(File::exists($oldimage)) {
+                    File::delete($oldimage);
+                }
+            }
+
             $owner->delete();
             return $this->returnSuccessMessage('Owner Deleted Successfully');
         }else{

@@ -115,7 +115,7 @@ class AdminReportsController extends Controller
 
         if (empty($report))
         {
-            return $this->returnError('E555', 'No Report Has #ID'.$id);
+            return $this->returnError('E555', 'No Report Has #ID '.$id);
         }
             $validator =Validator::make($request->all() ,[
 
@@ -149,9 +149,9 @@ class AdminReportsController extends Controller
             }
             if ($finder == 0)
             {
-                $oldimage = $report->devicePicture;
-                if(File::exists($oldimage)) {
-                    File::delete($oldimage);
+                $reportImage = public_path().$report->devicePicture;
+                if(File::exists($reportImage)) {
+                    File::delete($reportImage);
                 }
 
                 $now = Carbon::now();
@@ -176,6 +176,11 @@ class AdminReportsController extends Controller
 
         if (empty($report))
         {
+            $reportImage = public_path().$report->devicePicture;
+            if(File::exists($reportImage)) {
+                File::delete($reportImage);
+            }
+
             return $this->returnError('E555', 'No Report Has #ID'.$id);
         }
             $report->delete();

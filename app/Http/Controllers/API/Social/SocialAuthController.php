@@ -52,7 +52,7 @@ class SocialAuthController extends Controller
                             'firstName' => $providerUser->user['given_name'],
                             'lastName'=>$providerUser->user['family_name'],
                             'email' => $providerUser->email,
-                            'avatar' => $providerUser->avatar,
+                            'avatar' => '/assets/defult-user-avatar.jpg',
                             'fullInfo' => false
                         ]);
                         $user->socialProvider()->create([
@@ -77,7 +77,7 @@ class SocialAuthController extends Controller
                             'firstName' => $providerUser->user['given_name'],
                             'lastName' =>$providerUser->user['family_name'],
                             'email' => $providerUser->email,
-                            'avatar' => $providerUser->avatar,
+                            'avatar' => '/assets/defult-user-avatar.jpg',
                             'fullInfo' => false
                         ]);
                         $owner->socialProvider()->create([
@@ -127,7 +127,7 @@ class SocialAuthController extends Controller
                             'firstName' => $providerUser->user['first_name'],
                             'lastName' => $providerUser->user['last_name'],
                             'email' => $providerUser->email,
-                            'avatar' => $providerUser->avatar,
+                            'avatar' => '/assets/defult-user-avatar.jpg',
                             'fullInfo' => false
                         ]);
                         $user->socialProvider()->create([
@@ -152,7 +152,7 @@ class SocialAuthController extends Controller
                             'firstName' => $providerUser->user['first_name'],
                             'lastName' => $providerUser->user['last_name'],
                             'email' => $providerUser->email,
-                            'avatar' => $providerUser->avatar,
+                            'avatar' => '/assets/defult-user-avatar.jpg',
                             'fullInfo' => false
                         ]);
                         $owner->socialProvider()->create([

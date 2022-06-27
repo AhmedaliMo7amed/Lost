@@ -184,16 +184,16 @@ class AdminUsersController extends Controller
                     return $this->returnValidationError('E222',$validator);
                 }
 
-                $oldimage = public_path().$user->avatar;
-                if($user->avatar != '/assets/defult-user-avatar.jpg')
-                {
-                    if(File::exists($oldimage)) {
-                        File::delete($oldimage);
-                    }
-                }
                 // Saving User Picture in the public/images/avatars path (if founded)
                 if ($request->hasFile('avatar'))
                 {
+                    $oldimage = public_path().$user->avatar;
+                    if($user->avatar != '/assets/defult-user-avatar.jpg')
+                    {
+                        if(File::exists($oldimage)) {
+                            File::delete($oldimage);
+                        }
+                    }
                     $now = Carbon::now();
                     $destinationPath = public_path().'/images/avatars/users/'.$now->year.'/'.'0'.$now->month.'/';
                     $userPhoto = $request->file('avatar');
@@ -229,6 +229,14 @@ class AdminUsersController extends Controller
         $user = User::find($id);
         if (!is_null($user))
         {
+            $oldimage = public_path().$user->avatar;
+            if($user->avatar != '/assets/defult-user-avatar.jpg')
+            {
+                if(File::exists($oldimage)) {
+                    File::delete($oldimage);
+                }
+            }
+
             $user->delete();
             return $this->returnSuccessMessage('User Deleted Successfully');
         }else{

@@ -137,15 +137,16 @@ class AdminReviewController extends Controller
             return $this->returnValidationError('E222',$validator);
         }
 
-        $oldimage = public_path().$review->theifPicture;
-        if($review->theifPicture != '/assets/defult-theif-avatar.png')
-        {
-            if(File::exists($oldimage)) {
-                File::delete($oldimage);
-            }
-        }
         if ($request->has('theifPicture'))
         {
+            $revImage = public_path().$review->theifPicture;
+            if($review->theifPicture != '/assets/defult-theif-avatar.png')
+            {
+                if(File::exists($revImage)) {
+                    File::delete($revImage);
+                }
+            }
+
             $now = Carbon::now();
             $destinationPath = public_path().'/images/thieves/'.$now->year.'/'.'0'.$now->month.'/';
             $theifPhoto = $request->file('theifPicture');
@@ -168,7 +169,15 @@ class AdminReviewController extends Controller
 
         if (empty($review))
         {
-            return $this->returnError('E555', 'No Review Has #ID'.$id);
+            $revImage = public_path().$review->theifPicture;
+            if($review->theifPicture != '/assets/defult-theif-avatar.png')
+            {
+                if(File::exists($revImage)) {
+                    File::delete($revImage);
+                }
+            }
+
+            return $this->returnError('E555', 'No Review Has #ID '.$id);
         }
         $review->delete();
         return $this->returnSuccessMessage('Review Deleted Successfully');

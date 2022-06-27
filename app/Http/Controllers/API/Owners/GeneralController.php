@@ -8,6 +8,7 @@ use App\Models\Report;
 use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class GeneralController extends Controller
 {
@@ -40,7 +41,16 @@ class GeneralController extends Controller
 
     public function serialSerach(Request $request)
     {
-        if ($request->serial != null)
+        $validator =Validator::make($request->all() ,[
+            //Device Validation
+            'serial'=>'required|regex:/^\d{15,17}$/',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->returnError('E147', $validator->errors()->first());
+        }
+
+        if ($request->serial != null && $request->serial != "")
         {
             $seracher = Report::where('serialNumber' , $request->serial)->first();
             if (!is_null($seracher)) {
@@ -55,15 +65,17 @@ class GeneralController extends Controller
 
     }
 
+
+
     public function list(Request $request)
     {
         $cheker = Report::get();
         if (!is_null($cheker)) {
             $reportQuery = Report::with('user');
 
-            if ($request->type)
+            if ($request->type && $request->type != 'null' && $request->type != 'NULL')
             {
-                $reportQuery->where('type' ,$request->type );
+                $reportQuery->where('type' , $request->type);
             }
             if ($request->brand && $request->brand != 'null' && $request->brand != 'NULL')
             {

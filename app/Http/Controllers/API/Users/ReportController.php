@@ -99,7 +99,7 @@ class ReportController extends Controller
         $input = $request->all();
         if (empty($report))
         {
-            return $this->returnError('E555', 'No Report Has #ID'.$id);
+            return $this->returnError('E555', 'No Report Has #ID '.$id);
         }
 
         if ($report['user_id'] == $authUser->id)
@@ -124,7 +124,7 @@ class ReportController extends Controller
                 'additional_info'=>'nullable|string|max:100',
             ]);
             if ($validator->fails()) {
-                return $this->returnValidationError('E222',$validator);
+                return $this->returnError('E147', $validator->errors()->first());
             }
 
             $finder = 0;
@@ -136,10 +136,12 @@ class ReportController extends Controller
             }
 
             if ($finder == 0){
-                $oldimage = $report->devicePicture;
-                if(File::exists($oldimage)) {
-                    File::delete($oldimage);
+
+                $reportImage = public_path().$report->devicePicture;
+                if(File::exists($reportImage)) {
+                    File::delete($reportImage);
                 }
+
                 $now = Carbon::now();
                 $destinationPath = public_path().'/images/devices/'.$now->year.'/'.'0'.$now->month.'/';
                 $devicePhoto = $request->file('devicePicture');
@@ -168,7 +170,6 @@ class ReportController extends Controller
 
     public function show($id)
     {
-
         $authUser = Auth::guard('user-api')->user();
         $report = Report::find($id);
 
@@ -194,6 +195,11 @@ class ReportController extends Controller
 
         if ($report['user_id'] == $authUser->id)
         {
+            $reportImage = public_path().$report->devicePicture;
+            if(File::exists($reportImage)) {
+                File::delete($reportImage);
+            }
+
             $report->delete();
             return $this->returnSuccessMessage('Report Deleted Successfully');
         }else{

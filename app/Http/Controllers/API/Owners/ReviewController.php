@@ -42,7 +42,7 @@ class ReviewController extends Controller
 
             if(empty(Report::find($id)))
             {
-                return $this->returnError('E202', 'Report With #ID'.$id.' Not Founded');
+                return $this->returnError('E202', 'Report With #ID '.$id.' Not Founded');
             }
             $validator = Validator::make($input,[
                 'theifName'=> 'required|string',
@@ -97,7 +97,7 @@ class ReviewController extends Controller
 
         if (empty($review))
         {
-            return $this->returnError('E555', 'No review Has #ID'.$id);
+            return $this->returnError('E555', 'No review Has #ID '.$id);
         }
 
         if ($review['owner_id'] == $authOwner->id)
@@ -114,9 +114,12 @@ class ReviewController extends Controller
             }else{
                 if ($request->has('theifPicture'))
                 {
-                    $oldimage = $review->theifPicture;
-                    if(File::exists($oldimage)) {
-                        File::delete($oldimage);
+                    $revImage = public_path().$review->theifPicture;
+                    if($review->theifPicture != '/assets/defult-theif-avatar.png')
+                    {
+                        if(File::exists($revImage)) {
+                            File::delete($revImage);
+                        }
                     }
 
                     $now = Carbon::now();
@@ -143,10 +146,20 @@ class ReviewController extends Controller
     {
         $authOwner = Auth::guard('owner-api')->user();
         $review = Review::find($id);
-        $report = Report::find($review->report_id);
 
         if (!is_null($review))
         {
+            $report = Report::find($review->report_id);
+
+            $revImage = public_path().$review->theifPicture;
+            if($review->theifPicture != '/assets/defult-theif-avatar.png')
+            {
+                if(File::exists($revImage)) {
+                    File::delete($revImage);
+                }
+            }
+
+
             if ($review['owner_id'] == $authOwner->id)
             {
                 $review->delete();
@@ -157,7 +170,7 @@ class ReviewController extends Controller
                 return $this->returnError('E555', 'Authorization : You Cant Delete This review');
             }
         }else{
-            return $this->returnError('E555', 'No Review Has #ID'.$id);
+            return $this->returnError('E555', 'No Review Has #ID '.$id);
         }
 
     }
@@ -172,10 +185,10 @@ class ReviewController extends Controller
             $Myreview = Review::find($id)->with('storeOwner','report')->first();
             $result = new ReviewResource($Myreview);
 
-            return $this->returnData('Data',$result,'Review #ID'.$id.'Sended Successfully');
+            return $this->returnData('Data',$result,'Review #ID '.$id.' Sended Successfully');
 
         } else{
-            return $this->returnError('E555', 'No Review Has #ID'.$id);
+            return $this->returnError('E555', 'No Review Has #ID '.$id);
         }
     }
 
