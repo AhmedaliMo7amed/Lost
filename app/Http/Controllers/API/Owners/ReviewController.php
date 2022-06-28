@@ -47,7 +47,7 @@ class ReviewController extends Controller
             $validator = Validator::make($input,[
                 'theifName'=> 'required|string',
                 'theifNatID' =>'required|regex:/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/',
-                'theifMobile' => 'nullable|regex:/^01[0125][0-9]{8}$/' ,
+                'theifMobile' => 'required|regex:/^01[0125][0-9]{8}$/' ,
                 'theifPicture' => 'nullable|image:jpeg,jpg,png,gif|max:10000',
                 'additional_info' => 'nullable|string|max:100',
             ]);
@@ -105,7 +105,7 @@ class ReviewController extends Controller
             $validator =Validator::make($request->all() ,[
                 'theifName'=> 'required|string',
                 'theifNatID' =>'required|regex:/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/',
-                'theifMobile' => 'nullable|regex:/^01[0125][0-9]{8}$/' ,
+                'theifMobile' => 'required|regex:/^01[0125][0-9]{8}$/' ,
                 'theifPicture' => 'nullable|image:jpeg,jpg,png,gif|max:10000',
                 'additional_info' => 'nullable|string|max:100',
             ]);

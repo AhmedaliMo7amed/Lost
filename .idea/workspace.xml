@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a835cc54-8141-4172-965d-26b4b3d96c32" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Admins/AdminOwnersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Admins/AdminOwnersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Admins/AdminReportsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Admins/AdminReportsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Admins/AdminReviewController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Admins/AdminReviewController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/OwnerProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/OwnerProfileController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/ReviewController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Owners/ReviewController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -265,7 +262,7 @@
       <workItem from="1655998548269" duration="3170000" />
       <workItem from="1656163856981" duration="18462000" />
       <workItem from="1656416794164" duration="2166000" />
-      <workItem from="1656435908756" duration="4103000" />
+      <workItem from="1656435908756" duration="5040000" />
     </task>
     <servers />
   </component>
