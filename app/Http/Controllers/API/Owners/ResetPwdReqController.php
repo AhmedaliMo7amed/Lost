@@ -47,7 +47,7 @@ class ResetPwdReqController extends Controller
         if($isToken) {
             return $isToken->token;
         }
-        $token = substr(str_shuffle("0123456789"), 0, 9);
+        $token = substr(str_shuffle("0123456789"), 0, 6);
         $this->saveToken($token, $email);
         return $token;
     }

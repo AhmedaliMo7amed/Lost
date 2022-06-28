@@ -177,18 +177,20 @@ class ReviewController extends Controller
 
     public function show($id)
     {
+
         $authOwner = Auth::guard('owner-api')->user();
         $review = Review::find($id);
 
+
         if (!is_null($review))
         {
-            $Myreview = Review::find($id)->with('storeOwner','report')->first();
-            $result = new ReviewResource($Myreview);
 
-            return $this->returnData('Data',$result,'Review #ID '.$id.' Sended Successfully');
+            $result = new ReviewResource($review);
+
+            return $this->returnData('Data',$result,'Review Sended Successfully');
 
         } else{
-            return $this->returnError('E555', 'No Review Has #ID '.$id);
+            return $this->returnError('E555', 'No Review Founded'   );
         }
     }
 
