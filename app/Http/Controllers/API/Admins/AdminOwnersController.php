@@ -240,7 +240,7 @@ class AdminOwnersController extends Controller
             $owner->delete();
             return $this->returnSuccessMessage('Owner Deleted Successfully');
         }else{
-            return $this->returnError('E555', 'Owner #'.$id.' Not Founded , Please Try again');
+            return $this->returnError('E555', 'Owner #'.$id.' Not Founded');
         }
     }
 

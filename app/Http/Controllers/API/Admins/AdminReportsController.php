@@ -171,20 +171,18 @@ class AdminReportsController extends Controller
 
     public function deleteReport($id)
     {
-
         $report = Report::find($id);
-
         if (empty($report))
         {
-            $reportImage = public_path().$report->devicePicture;
-            if(File::exists($reportImage)) {
-                File::delete($reportImage);
-            }
-
             return $this->returnError('E555', 'No Report Has #ID'.$id);
         }
-            $report->delete();
-            return $this->returnSuccessMessage('Report Deleted Successfully');
+
+        $reportImage = public_path().$report->devicePicture;
+        if(File::exists($reportImage)) {
+            File::delete($reportImage);
+        }
+        $report->delete();
+        return $this->returnSuccessMessage('Report Deleted Successfully');
     }
 
 }

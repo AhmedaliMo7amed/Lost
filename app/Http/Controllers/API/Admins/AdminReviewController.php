@@ -164,21 +164,20 @@ class AdminReviewController extends Controller
 
     public function deleteReview($id)
     {
-
         $review = Review::find($id);
 
         if (empty($review))
         {
-            $revImage = public_path().$review->theifPicture;
-            if($review->theifPicture != '/assets/defult-theif-avatar.png')
-            {
-                if(File::exists($revImage)) {
-                    File::delete($revImage);
-                }
-            }
-
             return $this->returnError('E555', 'No Review Has #ID '.$id);
         }
+        $revImage = public_path().$review->theifPicture;
+        if($review->theifPicture != '/assets/defult-theif-avatar.png')
+        {
+            if(File::exists($revImage)) {
+                File::delete($revImage);
+            }
+        }
+
         $review->delete();
         return $this->returnSuccessMessage('Review Deleted Successfully');
     }

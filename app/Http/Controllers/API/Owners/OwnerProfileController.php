@@ -168,7 +168,7 @@ class OwnerProfileController extends Controller
                 ]);
                 return $this->returnSuccessMessage('Avatar Changed Successfuly','S111');
             }else{
-                $basicimage= '/assets/defult-user-avatar.png';
+                $basicimage= '/assets/defult-user-avatar.jpg';
                 Owner::find(Auth::guard('owner-api')->user()->id)->update([
                     'avatar'=> $basicimage,
                 ]);

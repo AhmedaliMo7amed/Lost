@@ -133,7 +133,6 @@ class ReviewController extends Controller
                     $input['theifPicture'] = '/assets/defult-theif-avatar.png';
                 }
 
-
                 $review->update($input);
                 return $this->returnSuccessMessage('Review Updated Successfully');
             }
@@ -149,19 +148,17 @@ class ReviewController extends Controller
 
         if (!is_null($review))
         {
-            $report = Report::find($review->report_id);
-
-            $revImage = public_path().$review->theifPicture;
-            if($review->theifPicture != '/assets/defult-theif-avatar.png')
-            {
-                if(File::exists($revImage)) {
-                    File::delete($revImage);
-                }
-            }
-
-
             if ($review['owner_id'] == $authOwner->id)
             {
+                $report = Report::find($review->report_id);
+                $revImage = public_path().$review->theifPicture;
+                if($review->theifPicture != '/assets/defult-theif-avatar.png')
+                {
+                    if(File::exists($revImage)) {
+                        File::delete($revImage);
+                    }
+                }
+
                 $review->delete();
                 $report['status'] = 0;
                 $report->update();
