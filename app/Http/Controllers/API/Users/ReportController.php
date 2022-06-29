@@ -251,7 +251,6 @@ class ReportController extends Controller
         }else{
             return $this->returnError('E555', 'Authorization : You Cant view This');
         }
-
     }
 
 }

@@ -24,6 +24,7 @@ class reportReview extends JsonResource
             'theifPicture' => config('constants.base_url').$this->theifPicture,
             'additional_info' => $this->additional_info,
             'Owner' => new OwnerRevResource($this->storeOwner),
+            'Report' => new Report($this->report)
         ];
     }
 }
