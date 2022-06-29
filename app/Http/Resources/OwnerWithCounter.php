@@ -21,6 +21,8 @@ class OwnerWithCounter extends JsonResource
             'email' => $this->email,
             'mobile' => $this->mobile,
             'avatar' =>config('constants.base_url').$this->avatar,
+            'created_at' => $this->created_at->format('d/m'),
+            'updated_at' => $this->updated_at->format('d/m'),
             'Store' => new Store($this->store)
         ];
     }

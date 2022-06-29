@@ -3,16 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a835cc54-8141-4172-965d-26b4b3d96c32" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Contact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Owner.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Owner.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/OwnerRevResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/OwnerRevResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Report.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Report.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Review.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Review.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Store.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Store.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/UserWithoutToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/UserWithoutToken.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/reportReview.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/reportReview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/OwnerWithCounter.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/OwnerWithCounter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/getReviews.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/getReviews.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -272,7 +264,7 @@
       <workItem from="1656416794164" duration="2166000" />
       <workItem from="1656435908756" duration="5100000" />
       <workItem from="1656453402696" duration="31000" />
-      <workItem from="1656498631043" duration="2060000" />
+      <workItem from="1656498631043" duration="3689000" />
     </task>
     <servers />
   </component>
