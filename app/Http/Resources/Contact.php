@@ -24,8 +24,8 @@ class Contact extends JsonResource
             'street' => $this->street,
             'facebookLink' => $this->facebookLink,
             'whatsapp' => $this->whatsapp,
-            'created_at' => $this->created_at->format('d/m/y'),
-            'updated_at' => $this->updated_at->format('d/m/y')
+            'created_at' => $this->created_at->format('d/m'),
+            'updated_at' => $this->updated_at->format('d/m')
         ];
     }
 }

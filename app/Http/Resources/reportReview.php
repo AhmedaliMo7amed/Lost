@@ -23,6 +23,8 @@ class reportReview extends JsonResource
             'theifMobile' => $this->theifMobile,
             'theifPicture' => config('constants.base_url').$this->theifPicture,
             'additional_info' => $this->additional_info,
+            'created_at' => $this->created_at->format('d/m'),
+            'updated_at' => $this->updated_at->format('d/m'),
             'Owner' => new OwnerRevResource($this->storeOwner),
             'Report' => new Report($this->report)
         ];

@@ -18,8 +18,8 @@ class Admin extends JsonResource
             'adminID' => $this->id,
             'token' => $this->token,
             'UserName' => $this->username,
-            'created_at' => $this->created_at->format('d/m/y'),
-            'updated_at' => $this->updated_at->format('d/m/y'),
+            'created_at' => $this->created_at->format('d/m'),
+            'updated_at' => $this->updated_at->format('d/m')
         ];
     }
 }

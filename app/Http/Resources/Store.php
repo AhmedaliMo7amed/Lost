@@ -25,8 +25,8 @@ class Store extends JsonResource
             'storeMobile_2' => $this->storeMobile_2,
             'facebookLink' => $this->facebookLink,
             'whatsapp' => $this->whatsapp,
-            'created_at' => $this->created_at->format('d/m/y'),
-            'updated_at' => $this->updated_at->format('d/m/y')
+            'created_at' => $this->created_at->format('d/m'),
+            'updated_at' => $this->updated_at->format('d/m')
         ];
     }
 }
