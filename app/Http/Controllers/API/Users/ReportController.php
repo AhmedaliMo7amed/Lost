@@ -230,7 +230,6 @@ class ReportController extends Controller
     // review for you report (must be auth)
     public function reportReview($id)
     {
-
         $access = Report::find($id);
         $authUser = Auth::guard('user-api')->user();
         if (empty($access))
@@ -253,4 +252,42 @@ class ReportController extends Controller
         }
     }
 
+    // Unused function of SIM Cards Providers
+
+//    public function requestProvider(Request $request)
+//    {
+//        $input  = $request->all();
+//        $validator =Validator::make($request->all() ,[
+//            'imei'=>'nullable|regex:/^\d{15,17}$/',
+//            'provider'=>'required|string',
+//            'fullName'=> 'required|string',
+//            'motherFullName'=> 'required|string',
+//            'grandMotherFullName'=> 'required|string',
+//            'national_id' => 'required|regex:/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/',
+//            'simCardNum'=> 'required|regex:/^01[0125][0-9]{8}$/',
+//            'simCardSerial'=> 'required|regex:/^01[0125][0-9]{8}$/',
+//        ]);
+//
+//        if ($validator->fails()) {
+//            return $this->returnError('E147', $validator->errors()->first());
+//        }
+//        $requestProvider = new Provider();
+//        $requestProvider->create($input);
+//
+//        return $this->returnSuccessMessage('Requset sended to your provider , still waiting for response');
+//        this->getProviderResponse();
+//
+//    }
+//
+//    public function getProviderResponse($id)
+//    {
+//        $finder = Provider::find($id);
+//        if($finder->status == 0){
+//            return $this->returnError('E155','Still waiting for response');
+//        }
+//        if ($finder->status == 1){
+//            $responseRecord = ProviderResponse::where('requsetID',$finder->id)->get();
+//            return $this->returnSuccessMessage($responseRecord->msg);
+//        }
+//    }
 }
