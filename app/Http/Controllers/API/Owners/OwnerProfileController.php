@@ -98,8 +98,8 @@ class OwnerProfileController extends Controller
             $validator =Validator::make($request->all() ,[
                 // store Validation
                 'storeName' => 'required|string' ,
-                'government'=> 'required|string|max:15',
-                'city'=> 'required|string|max:15',
+                'government'=> 'required|string|max:30',
+                'city'=> 'required|string|max:30',
                 'street'=> 'required|string|max:30',
                 'storeMobile_1'=> 'required|regex:/^01[0125][0-9]{8}$/',
                 'storeMobile_2' => 'nullable|regex:/^01[0125][0-9]{8}$/' ,

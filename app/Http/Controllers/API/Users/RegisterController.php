@@ -37,8 +37,8 @@ class RegisterController extends Controller
             // Contact Info Validation
             'mobile_1'=> 'required|regex:/^01[0125][0-9]{8}$/',
             'mobile_2'=> 'nullable|regex:/^01[0125][0-9]{8}$/',
-            'government'=> 'required|string|max:15',
-            'city'=> 'required|string|max:15',
+            'government'=> 'required|string|max:30',
+            'city'=> 'required|string|max:30',
             'street'=> 'required|string|max:30',
             'facebookLink' => 'nullable|url|regex:/http(?:s):\/\/(?:www\.)facebook\.com\/.+/i',
             'whatsapp' => 'nullable|regex:/^01[0125][0-9]{8}$/',
@@ -183,8 +183,8 @@ class RegisterController extends Controller
                 // Contact Info Validation
                 'mobile_1'=> 'required|regex:/^01[0125][0-9]{8}$/',
                 'mobile_2'=> 'nullable|regex:/^01[0125][0-9]{8}$/',
-                'government'=> 'required|string|max:15',
-                'city'=> 'required|string|max:15',
+                'government'=> 'required|string|max:30',
+                'city'=> 'required|string|max:30',
                 'street'=> 'required|string|max:30',
                 'facebookLink' => 'nullable|url|regex:/http(?:s):\/\/(?:www\.)facebook\.com\/.+/i',
                 'whatsapp' => 'nullable|regex:/^01[0125][0-9]{8}$/',
