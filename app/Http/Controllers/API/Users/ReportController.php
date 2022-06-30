@@ -242,8 +242,8 @@ class ReportController extends Controller
 
             if (count($review) > 0)
             {
-                $result = reportReview::collection($review);
-                return $this->returnData('Data', $result );
+                $result = new reportReview($review);
+                return $this->returnData('Data', $result);
             }else{
                 return $this->returnError('E404','Sorry, it is still not reviewed');
             }
