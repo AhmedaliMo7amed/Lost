@@ -211,7 +211,6 @@ class ReportController extends Controller
     // all reviews for you reports (must be auth)
     public function allReviews()
     {
-
         $reviews = Review::with('storeOwner','report')
             ->whereHas('report', function($query) {
                 $query->where('user_id', '=', Auth::guard('user-api')->user()->id);
@@ -232,18 +231,18 @@ class ReportController extends Controller
     {
         $access = Report::find($id);
         $authUser = Auth::guard('user-api')->user();
-        if (empty($access))
+        if (is_null($access))
         {
-            return $this->returnError('E555', 'No Report Has #ID'.$id);
+            return $this->returnError('E555', 'Report not founded');
         }
         if (!is_null($access) && $access->user_id == $authUser->id)
         {
-            $review = Review::with('storeOwner')->where('report_id',$id)->get();
+            $review = Review::with('storeOwner')->where('report_id',$id)->first();
 
-            if (count($review) > 0)
+            if (!is_null($review))
             {
                 $result = new reportReview($review);
-                return $this->returnData('Data', $result);
+                return $this->returnData('Data', $result );
             }else{
                 return $this->returnError('E404','Sorry, it is still not reviewed');
             }
