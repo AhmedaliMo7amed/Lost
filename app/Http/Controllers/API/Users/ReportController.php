@@ -27,7 +27,7 @@ class ReportController extends Controller
     {
         $authUser = Auth::guard('user-api')->user()->id;
         $reports = Report::with('user')->where('user_id',$authUser)->get();
-        if (!empty($reports))
+        if (!is_null($reports))
         {
             $result = ReportResource::collection($reports);
             return $this->returnData('Data',$result,'User Reports Sent');
