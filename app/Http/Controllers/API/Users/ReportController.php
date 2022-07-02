@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Report as ReportResource;
 use mysql_xdevapi\Exception;
+use function PHPUnit\Framework\isEmpty;
 
 class ReportController extends Controller
 {
@@ -26,8 +27,7 @@ class ReportController extends Controller
     {
         $authUser = Auth::guard('user-api')->user()->id;
         $reports = Report::with('user')->where('user_id',$authUser)->get();
-
-        if (!is_null($reports))
+        if (!empty($reports))
         {
             $result = ReportResource::collection($reports);
             return $this->returnData('Data',$result,'User Reports Sent');

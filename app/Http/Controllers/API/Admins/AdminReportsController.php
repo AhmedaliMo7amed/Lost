@@ -49,6 +49,7 @@ class AdminReportsController extends Controller
 
     public function addReport(Request $request)
     {
+        $input = $request->all();
         try {
             $validator = Validator::make($request->all() ,[
                 'userID' => 'required',
@@ -92,9 +93,10 @@ class AdminReportsController extends Controller
                 $name = $devicePhoto->getClientOriginalName();
                 $deviceNewPhoto = Carbon::now()->format('His').$name;
                 $devicePhoto->move($destinationPath,$deviceNewPhoto);
-                $request['devicePicture'] = '/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
+                $input['devicePicture'] = '/images/devices/'.$now->year.'/'.'0'.$now->month.'/'.$deviceNewPhoto;
 
-                $user->report()->create($request->all());
+                $user->report()->create($input);
+
                 return $this->returnSuccessMessage('report created Successfully -> attached to: (User #'.$user->id.' '.$user->firstName.' '.$user->lastName.')');
             }else{
                 return $this->returnError('E102', 'Serial Is reported once before');
