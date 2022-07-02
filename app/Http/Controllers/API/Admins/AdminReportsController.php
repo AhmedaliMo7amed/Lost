@@ -113,6 +113,7 @@ class AdminReportsController extends Controller
     public function updateReport(Request $request, $id)
     {
         $report = Report::find($id);
+
         $input = $request->all();
 
         if (empty($report))
